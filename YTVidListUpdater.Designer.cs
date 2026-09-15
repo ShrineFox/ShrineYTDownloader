@@ -71,6 +71,7 @@
             tabPage2 = new TabPage();
             tabPage3 = new TabPage();
             tlp_Settings = new TableLayoutPanel();
+            chk_ConvertToMp3 = new CheckBox();
             chk_UseMp4Format = new CheckBox();
             groupBox_FFMPEGPath = new GroupBox();
             tlp_FFMPEGPath = new TableLayoutPanel();
@@ -661,6 +662,7 @@
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlp_Settings.Controls.Add(chk_ConvertToMp3, 3, 4);
             tlp_Settings.Controls.Add(chk_UseMp4Format, 3, 3);
             tlp_Settings.Controls.Add(groupBox_FFMPEGPath, 2, 1);
             tlp_Settings.Controls.Add(groupBox_YTDLPPath, 0, 1);
@@ -688,6 +690,20 @@
             tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 21F));
             tlp_Settings.Size = new Size(659, 430);
             tlp_Settings.TabIndex = 0;
+            // 
+            // chk_ConvertToMp3
+            // 
+            chk_ConvertToMp3.AutoSize = true;
+            chk_ConvertToMp3.Checked = true;
+            chk_ConvertToMp3.CheckState = CheckState.Checked;
+            chk_ConvertToMp3.Dock = DockStyle.Fill;
+            chk_ConvertToMp3.Location = new Point(495, 290);
+            chk_ConvertToMp3.Name = "chk_ConvertToMp3";
+            chk_ConvertToMp3.Size = new Size(161, 45);
+            chk_ConvertToMp3.TabIndex = 29;
+            chk_ConvertToMp3.Text = "Convert to MP3";
+            chk_ConvertToMp3.UseVisualStyleBackColor = true;
+            chk_ConvertToMp3.CheckedChanged += ConvertToMp3_CheckedChanged;
             // 
             // chk_UseMp4Format
             // 
@@ -1093,7 +1109,7 @@
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(460, 400);
             Name = "YTVidListUpdater";
-            Text = "YTVideoListUpdater v1.4.4";
+            Text = "YTVideoListUpdater v1.4.5";
             tlp_ListUpdater.ResumeLayout(false);
             tlp_ListUpdater.PerformLayout();
             groupBox_ytdlpver.ResumeLayout(false);
@@ -1221,5 +1237,6 @@
         private ToolStripMenuItem addMetadataFromTSVToolStripMenuItem;
         private Button btn_InstallFFMPEG;
         private CheckBox chk_UseMp4Format;
+        private CheckBox chk_ConvertToMp3;
     }
 }

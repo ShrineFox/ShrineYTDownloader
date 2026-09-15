@@ -480,6 +480,9 @@ namespace YTVideoListUpdater
             if (settings.DLMp4Format)
                 args += $"\r\n-S vcodec:h264,res,acodec:m4a";
 
+            if (settings.ConvertToMp3)
+                args += $"\r\n-x --audio-format mp3";
+
             args += $"\r\n{settings.CmdLineArgs}";
 
             return args;

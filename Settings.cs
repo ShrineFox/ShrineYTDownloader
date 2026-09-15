@@ -51,6 +51,9 @@ namespace YTVideoListUpdater
         public bool DLMp4Format { get; set; } = false;
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        public bool ConvertToMp3 { get; set; } = false;
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+
         public string CmdLineArgs { get; set; } = "";
     }
 
@@ -127,6 +130,7 @@ namespace YTVideoListUpdater
             chk_WriteAutoSubs.Checked = settings.WriteAutoSubs;
             chk_EmbedSubs.Checked = settings.EmbedSubs;
             chk_UseMp4Format.Checked = settings.DLMp4Format;
+            chk_ConvertToMp3.Checked = settings.ConvertToMp3;
             txt_CmdArgs.Text = settings.CmdLineArgs;
         }
 
@@ -264,6 +268,13 @@ namespace YTVideoListUpdater
         {
             var chk = (CheckBox)sender;
             settings.DLMp4Format = chk.Checked;
+            SaveJson(jsonPath);
+        }
+
+        private void ConvertToMp3_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            settings.ConvertToMp3 = chk.Checked;
             SaveJson(jsonPath);
         }
 
