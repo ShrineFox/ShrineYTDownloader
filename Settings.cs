@@ -12,48 +12,65 @@ namespace YTVideoListUpdater
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string OutputDir { get; set; } = "./";
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string TitleFormat { get; set; } = "";
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string YTDlpExePath { get; set; } = "./yt-dlp.exe";
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string CookiesFromBrowser { get; set; } = "None";
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string FfmpegExePath { get; set; } = "";
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool AddMetadata { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteThumbnail { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteInfoJson { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteDescription { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteComments { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteSub { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool WriteAutoSubs { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool EmbedSubs { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool DLMp4Format { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool ConvertToMp3 { get; set; } = false;
-        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
 
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public int SleepRequests { get; set; } = 3;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public int SleepInterval { get; set; } = 60;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public int MaxSleepInterval { get; set; } = 120;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public bool RateLimit { get; set; } = true;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public bool UpdateOnStartup { get; set; } = true;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string CmdLineArgs { get; set; } = "";
     }
 
@@ -61,7 +78,6 @@ namespace YTVideoListUpdater
     {
         public static string jsonPath;
         public static Settings settings;
-
 
         public void SaveJson(string jsonPath)
         {
@@ -83,7 +99,7 @@ namespace YTVideoListUpdater
                     new YTChannel() { ID = "UCo03CCLE1x34004iBmjcHnA", Name = "TwitchClipSauce" },
                     new YTChannel() { ID = "UCHEVjnU0KXhr-HDrlwoBm2g", Name = "ExtraSauce" },
                 },
-                OutputDir = @"./",
+                OutputDir = @"./Output/",
                 TitleFormat = "%(title)s.%(ext)s",
                 YTDlpExePath = "./yt-dlp.exe",
                 WriteInfoJson = false,
@@ -95,6 +111,11 @@ namespace YTVideoListUpdater
                 EmbedSubs = false,
                 WriteAutoSubs = false,
                 DLMp4Format = true,
+                SleepRequests = 3,
+                SleepInterval = 60,
+                MaxSleepInterval = 120,
+                RateLimit = true,
+                UpdateOnStartup = true,
                 CmdLineArgs = "--verbose"
             };
         }
@@ -103,7 +124,18 @@ namespace YTVideoListUpdater
         {
             if (!File.Exists(jsonPath))
             {
+                // Create new configuraton JSON since one doesn't exist
                 SaveJson(jsonPath);
+
+                // Ensure Deno and Ffmpeg are installed if this is (likely)
+                // the first time launching program
+                MessageBox.Show("Since this is the first time starting up," +
+                    "\r\nthe program will now automatically download required dependencies:" +
+                    "\r\nyt-dlp, deno, and ffmpeg." +
+                    "\r\n\r\nPlease be patient as this may take some time.", "YTVideoListUpdater (First-Time Startup)");
+
+                InstallDeno();
+                InstallFfmpeg();
             }
 
             string jsonText = File.ReadAllText(Path.GetFullPath(jsonPath));
@@ -131,6 +163,11 @@ namespace YTVideoListUpdater
             chk_EmbedSubs.Checked = settings.EmbedSubs;
             chk_UseMp4Format.Checked = settings.DLMp4Format;
             chk_ConvertToMp3.Checked = settings.ConvertToMp3;
+            num_SleepRequests.Value = settings.SleepRequests;
+            num_SleepInterval.Value = settings.SleepInterval;
+            num_MaxSleepInterval.Value = settings.MaxSleepInterval;
+            chk_RateLimit.Checked = settings.RateLimit;
+            chk_UpdateOnStartup.Checked = settings.UpdateOnStartup;
             txt_CmdArgs.Text = settings.CmdLineArgs;
         }
 
@@ -282,6 +319,41 @@ namespace YTVideoListUpdater
         {
             var txt = (TextBox)sender;
             settings.CmdLineArgs = txt.Text;
+            SaveJson(jsonPath);
+        }
+
+        private void SleepRequests_ValueChanged(object sender, EventArgs e)
+        {
+            var num = (NumericUpDown)sender;
+            settings.SleepRequests = Convert.ToInt32(num.Value);
+            SaveJson(jsonPath);
+        }
+
+        private void SleepInterval_ValueChanged(object sender, EventArgs e)
+        {
+            var num = (NumericUpDown)sender;
+            settings.SleepInterval = Convert.ToInt32(num.Value);
+            SaveJson(jsonPath);
+        }
+
+        private void MaxSleepInterval_ValueChanged(object sender, EventArgs e)
+        {
+            var num = (NumericUpDown)sender;
+            settings.MaxSleepInterval = Convert.ToInt32(num.Value);
+            SaveJson(jsonPath);
+        }
+
+        private void RateLimit_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            settings.RateLimit = chk.Checked;
+            SaveJson(jsonPath);
+        }
+
+        private void UpdateOnStartup_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            settings.UpdateOnStartup = chk.Checked;
             SaveJson(jsonPath);
         }
     }

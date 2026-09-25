@@ -44,6 +44,8 @@ namespace YTVideoListUpdater
 
             txt_CmdArgs.Text = settings.CmdLineArgs;
             GetYTDLPVersion();
+            if (settings.UpdateOnStartup)
+                UpdateYTDLP();
         }
 
         private void VideoComboBox_Format(object? sender, ListControlConvertEventArgs e)
@@ -483,6 +485,13 @@ namespace YTVideoListUpdater
             if (settings.ConvertToMp3)
                 args += $"\r\n-x --audio-format mp3";
 
+            if (settings.RateLimit)
+            {
+                args += $"\r\n--sleep-requests {settings.SleepRequests}" +
+                    $"\r\n--sleep-interval {settings.SleepInterval}" +
+                    $"\r\n--max-sleep-interval {settings.MaxSleepInterval}";
+            }
+
             args += $"\r\n{settings.CmdLineArgs}";
 
             return args;
@@ -729,6 +738,11 @@ namespace YTVideoListUpdater
 
         private void InstallDeno_Click(object sender, EventArgs e)
         {
+            InstallDeno();
+        }
+
+        private void InstallDeno()
+        {
             txt_Log.Text += $"\r\nInstalling Deno...";
             string powershellCmd = "irm https://deno.land/install.ps1 | iex";
             txt_Log.Text += $"\r\nRunning powershell command: {powershellCmd}";
@@ -797,6 +811,11 @@ namespace YTVideoListUpdater
 
         private void InstallFFMPEG_Click(object sender, EventArgs e)
         {
+            InstallFfmpeg();
+        }
+
+        private void InstallFfmpeg()
+        {
             using (var client = new WebClient())
             {
                 try
@@ -836,6 +855,26 @@ namespace YTVideoListUpdater
                     return;
                 }
             }
+        }
+
+        public static void OpenWebpage(string url)
+        {
+            System.Diagnostics.Process.Start("cmd", "/C start" + " " + url);
+        }
+
+        private void Credits_Click(object sender, EventArgs e)
+        {
+            OpenWebpage("http://www.shrinefox.com");
+        }
+
+        private void Readme_Click(object sender, EventArgs e)
+        {
+            OpenWebpage("https://github.com/ShrineFox/YTVideoListUpdater#readme");
+        }
+
+        private void Wiki_Click(object sender, EventArgs e)
+        {
+            OpenWebpage("https://github.com/ShrineFox/YTVideoListUpdater/wiki");
         }
     }
 

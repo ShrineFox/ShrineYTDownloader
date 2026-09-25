@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YTVidListUpdater));
             tlp_ListUpdater = new TableLayoutPanel();
+            chk_UpdateOnStartup = new CheckBox();
             btn_InstallFFMPEG = new Button();
             btn_InstallDeno = new Button();
             groupBox_ytdlpver = new GroupBox();
@@ -40,8 +41,10 @@
             btn_UpdateVideoList = new Button();
             txt_Log = new TextBox();
             tabControl = new TabControl();
-            tabPage1 = new TabPage();
+            tabPage_Downloader = new TabPage();
             tableLayoutPanel_ChannelDownloader = new TableLayoutPanel();
+            label1 = new Label();
+            lbl_Credits = new Label();
             chk_LaunchCmd = new CheckBox();
             tabControl_DlType = new TabControl();
             tabPage4 = new TabPage();
@@ -71,6 +74,15 @@
             tabPage2 = new TabPage();
             tabPage3 = new TabPage();
             tlp_Settings = new TableLayoutPanel();
+            chk_RateLimit = new CheckBox();
+            groupBox_RateLimit = new GroupBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            groupBox_MaxSleepInterval = new GroupBox();
+            num_MaxSleepInterval = new NumericUpDown();
+            groupBox_SleepInterval = new GroupBox();
+            num_SleepInterval = new NumericUpDown();
+            groupBox_SleepRequests = new GroupBox();
+            num_SleepRequests = new NumericUpDown();
             chk_ConvertToMp3 = new CheckBox();
             chk_UseMp4Format = new CheckBox();
             groupBox_FFMPEGPath = new GroupBox();
@@ -108,11 +120,14 @@
             addMetadataFromTSVToolStripMenuItem = new ToolStripMenuItem();
             cmdOptionsToolStripMenuItem = new ToolStripMenuItem();
             chk_KeepCmdOpen = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            readmeToolStripMenuItem = new ToolStripMenuItem();
+            wikiToolStripMenuItem = new ToolStripMenuItem();
             tlp_ListUpdater.SuspendLayout();
             groupBox_ytdlpver.SuspendLayout();
             groupBox_Channel.SuspendLayout();
             tabControl.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabPage_Downloader.SuspendLayout();
             tableLayoutPanel_ChannelDownloader.SuspendLayout();
             tabControl_DlType.SuspendLayout();
             tabPage4.SuspendLayout();
@@ -128,6 +143,14 @@
             tabPage2.SuspendLayout();
             tabPage3.SuspendLayout();
             tlp_Settings.SuspendLayout();
+            groupBox_RateLimit.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            groupBox_MaxSleepInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)num_MaxSleepInterval).BeginInit();
+            groupBox_SleepInterval.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)num_SleepInterval).BeginInit();
+            groupBox_SleepRequests.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)num_SleepRequests).BeginInit();
             groupBox_FFMPEGPath.SuspendLayout();
             tlp_FFMPEGPath.SuspendLayout();
             groupBox_YTDLPPath.SuspendLayout();
@@ -146,6 +169,7 @@
             tlp_ListUpdater.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
             tlp_ListUpdater.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlp_ListUpdater.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlp_ListUpdater.Controls.Add(chk_UpdateOnStartup, 2, 1);
             tlp_ListUpdater.Controls.Add(btn_InstallFFMPEG, 2, 2);
             tlp_ListUpdater.Controls.Add(btn_InstallDeno, 1, 2);
             tlp_ListUpdater.Controls.Add(groupBox_ytdlpver, 0, 1);
@@ -161,16 +185,29 @@
             tlp_ListUpdater.RowStyles.Add(new RowStyle(SizeType.Percent, 16.6666679F));
             tlp_ListUpdater.RowStyles.Add(new RowStyle(SizeType.Percent, 16.6666679F));
             tlp_ListUpdater.RowStyles.Add(new RowStyle(SizeType.Percent, 44.4444466F));
-            tlp_ListUpdater.Size = new Size(653, 424);
+            tlp_ListUpdater.Size = new Size(653, 519);
             tlp_ListUpdater.TabIndex = 0;
+            // 
+            // chk_UpdateOnStartup
+            // 
+            chk_UpdateOnStartup.AutoSize = true;
+            chk_UpdateOnStartup.Dock = DockStyle.Fill;
+            chk_UpdateOnStartup.Location = new Point(524, 118);
+            chk_UpdateOnStartup.Name = "chk_UpdateOnStartup";
+            chk_UpdateOnStartup.Size = new Size(126, 80);
+            chk_UpdateOnStartup.TabIndex = 29;
+            chk_UpdateOnStartup.Text = "Update on Startup";
+            chk_UpdateOnStartup.UseVisualStyleBackColor = true;
+            chk_UpdateOnStartup.CheckedChanged += UpdateOnStartup_CheckedChanged;
             // 
             // btn_InstallFFMPEG
             // 
+            btn_InstallFFMPEG.Cursor = Cursors.Hand;
             btn_InstallFFMPEG.Dock = DockStyle.Fill;
             btn_InstallFFMPEG.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn_InstallFFMPEG.Location = new Point(524, 167);
+            btn_InstallFFMPEG.Location = new Point(524, 204);
             btn_InstallFFMPEG.Name = "btn_InstallFFMPEG";
-            btn_InstallFFMPEG.Size = new Size(126, 64);
+            btn_InstallFFMPEG.Size = new Size(126, 80);
             btn_InstallFFMPEG.TabIndex = 6;
             btn_InstallFFMPEG.Text = "Install ffmpeg";
             btn_InstallFFMPEG.UseVisualStyleBackColor = true;
@@ -178,11 +215,12 @@
             // 
             // btn_InstallDeno
             // 
+            btn_InstallDeno.Cursor = Cursors.Hand;
             btn_InstallDeno.Dock = DockStyle.Fill;
             btn_InstallDeno.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn_InstallDeno.Location = new Point(394, 167);
+            btn_InstallDeno.Location = new Point(394, 204);
             btn_InstallDeno.Name = "btn_InstallDeno";
-            btn_InstallDeno.Size = new Size(124, 64);
+            btn_InstallDeno.Size = new Size(124, 80);
             btn_InstallDeno.TabIndex = 5;
             btn_InstallDeno.Text = "Install Deno";
             btn_InstallDeno.UseVisualStyleBackColor = true;
@@ -192,9 +230,9 @@
             // 
             groupBox_ytdlpver.Controls.Add(lbl_Version);
             groupBox_ytdlpver.Dock = DockStyle.Fill;
-            groupBox_ytdlpver.Location = new Point(3, 97);
+            groupBox_ytdlpver.Location = new Point(3, 118);
             groupBox_ytdlpver.Name = "groupBox_ytdlpver";
-            groupBox_ytdlpver.Size = new Size(385, 64);
+            groupBox_ytdlpver.Size = new Size(385, 80);
             groupBox_ytdlpver.TabIndex = 4;
             groupBox_ytdlpver.TabStop = false;
             groupBox_ytdlpver.Text = "YT-DLP Version";
@@ -211,11 +249,12 @@
             // 
             // btn_UpdateYTDLP
             // 
+            btn_UpdateYTDLP.Cursor = Cursors.Hand;
             btn_UpdateYTDLP.Dock = DockStyle.Fill;
             btn_UpdateYTDLP.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btn_UpdateYTDLP.Location = new Point(394, 97);
+            btn_UpdateYTDLP.Location = new Point(394, 118);
             btn_UpdateYTDLP.Name = "btn_UpdateYTDLP";
-            btn_UpdateYTDLP.Size = new Size(124, 64);
+            btn_UpdateYTDLP.Size = new Size(124, 80);
             btn_UpdateYTDLP.TabIndex = 3;
             btn_UpdateYTDLP.Text = "Download Latest YT-DLP";
             btn_UpdateYTDLP.UseVisualStyleBackColor = true;
@@ -227,7 +266,7 @@
             groupBox_Channel.Dock = DockStyle.Fill;
             groupBox_Channel.Location = new Point(3, 3);
             groupBox_Channel.Name = "groupBox_Channel";
-            groupBox_Channel.Size = new Size(385, 88);
+            groupBox_Channel.Size = new Size(385, 109);
             groupBox_Channel.TabIndex = 0;
             groupBox_Channel.TabStop = false;
             groupBox_Channel.Text = "Channel";
@@ -245,11 +284,12 @@
             // btn_UpdateVideoList
             // 
             tlp_ListUpdater.SetColumnSpan(btn_UpdateVideoList, 2);
+            btn_UpdateVideoList.Cursor = Cursors.Hand;
             btn_UpdateVideoList.Dock = DockStyle.Fill;
             btn_UpdateVideoList.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
             btn_UpdateVideoList.Location = new Point(394, 3);
             btn_UpdateVideoList.Name = "btn_UpdateVideoList";
-            btn_UpdateVideoList.Size = new Size(256, 88);
+            btn_UpdateVideoList.Size = new Size(256, 109);
             btn_UpdateVideoList.TabIndex = 1;
             btn_UpdateVideoList.Text = "Update Video List";
             btn_UpdateVideoList.UseVisualStyleBackColor = true;
@@ -259,42 +299,44 @@
             // 
             tlp_ListUpdater.SetColumnSpan(txt_Log, 3);
             txt_Log.Dock = DockStyle.Fill;
-            txt_Log.Location = new Point(3, 237);
+            txt_Log.Location = new Point(3, 290);
             txt_Log.Multiline = true;
             txt_Log.Name = "txt_Log";
             txt_Log.ReadOnly = true;
             txt_Log.ScrollBars = ScrollBars.Vertical;
-            txt_Log.Size = new Size(647, 184);
+            txt_Log.Size = new Size(647, 226);
             txt_Log.TabIndex = 2;
             // 
             // tabControl
             // 
-            tabControl.Controls.Add(tabPage1);
+            tabControl.Controls.Add(tabPage_Downloader);
             tabControl.Controls.Add(tabPage2);
             tabControl.Controls.Add(tabPage3);
             tabControl.Dock = DockStyle.Fill;
             tabControl.Location = new Point(0, 28);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(667, 463);
+            tabControl.Size = new Size(712, 575);
             tabControl.TabIndex = 1;
             // 
-            // tabPage1
+            // tabPage_Downloader
             // 
-            tabPage1.Controls.Add(tableLayoutPanel_ChannelDownloader);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(659, 430);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Downloader";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabPage_Downloader.Controls.Add(tableLayoutPanel_ChannelDownloader);
+            tabPage_Downloader.Location = new Point(4, 29);
+            tabPage_Downloader.Name = "tabPage_Downloader";
+            tabPage_Downloader.Padding = new Padding(3);
+            tabPage_Downloader.Size = new Size(704, 542);
+            tabPage_Downloader.TabIndex = 0;
+            tabPage_Downloader.Text = "Downloader";
+            tabPage_Downloader.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel_ChannelDownloader
             // 
             tableLayoutPanel_ChannelDownloader.ColumnCount = 2;
             tableLayoutPanel_ChannelDownloader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 79.70205F));
             tableLayoutPanel_ChannelDownloader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20.29795F));
+            tableLayoutPanel_ChannelDownloader.Controls.Add(label1, 1, 4);
+            tableLayoutPanel_ChannelDownloader.Controls.Add(lbl_Credits, 0, 4);
             tableLayoutPanel_ChannelDownloader.Controls.Add(chk_LaunchCmd, 1, 2);
             tableLayoutPanel_ChannelDownloader.Controls.Add(tabControl_DlType, 0, 0);
             tableLayoutPanel_ChannelDownloader.Controls.Add(txt_DownloadLog, 0, 3);
@@ -302,14 +344,41 @@
             tableLayoutPanel_ChannelDownloader.Dock = DockStyle.Fill;
             tableLayoutPanel_ChannelDownloader.Location = new Point(3, 3);
             tableLayoutPanel_ChannelDownloader.Name = "tableLayoutPanel_ChannelDownloader";
-            tableLayoutPanel_ChannelDownloader.RowCount = 4;
-            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
+            tableLayoutPanel_ChannelDownloader.RowCount = 5;
+            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
             tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel_ChannelDownloader.Size = new Size(653, 424);
+            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel_ChannelDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 5F));
+            tableLayoutPanel_ChannelDownloader.Size = new Size(698, 536);
             tableLayoutPanel_ChannelDownloader.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Right;
+            label1.AutoSize = true;
+            label1.Cursor = Cursors.Hand;
+            label1.Font = new Font("Segoe UI", 9F, FontStyle.Underline);
+            label1.ForeColor = SystemColors.ActiveCaption;
+            label1.Location = new Point(594, 512);
+            label1.Name = "label1";
+            label1.Size = new Size(101, 20);
+            label1.TabIndex = 18;
+            label1.Text = "shrinefox.com";
+            label1.TextAlign = ContentAlignment.MiddleRight;
+            label1.Click += Credits_Click;
+            // 
+            // lbl_Credits
+            // 
+            lbl_Credits.Anchor = AnchorStyles.Right;
+            lbl_Credits.AutoSize = true;
+            lbl_Credits.ForeColor = SystemColors.ButtonShadow;
+            lbl_Credits.Location = new Point(404, 512);
+            lbl_Credits.Name = "lbl_Credits";
+            lbl_Credits.Size = new Size(149, 20);
+            lbl_Credits.TabIndex = 17;
+            lbl_Credits.Text = "Created by ShrineFox";
+            lbl_Credits.TextAlign = ContentAlignment.MiddleRight;
             // 
             // chk_LaunchCmd
             // 
@@ -318,9 +387,9 @@
             chk_LaunchCmd.CheckState = CheckState.Checked;
             chk_LaunchCmd.Dock = DockStyle.Fill;
             chk_LaunchCmd.Font = new Font("Segoe UI", 8F);
-            chk_LaunchCmd.Location = new Point(523, 256);
+            chk_LaunchCmd.Location = new Point(559, 270);
             chk_LaunchCmd.Name = "chk_LaunchCmd";
-            chk_LaunchCmd.Size = new Size(127, 78);
+            chk_LaunchCmd.Size = new Size(136, 101);
             chk_LaunchCmd.TabIndex = 16;
             chk_LaunchCmd.Text = "Launch Cmd";
             chk_LaunchCmd.UseVisualStyleBackColor = true;
@@ -335,7 +404,7 @@
             tabControl_DlType.Name = "tabControl_DlType";
             tableLayoutPanel_ChannelDownloader.SetRowSpan(tabControl_DlType, 2);
             tabControl_DlType.SelectedIndex = 0;
-            tabControl_DlType.Size = new Size(647, 247);
+            tabControl_DlType.Size = new Size(692, 261);
             tabControl_DlType.TabIndex = 12;
             // 
             // tabPage4
@@ -344,9 +413,9 @@
             tabPage4.Location = new Point(4, 29);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(639, 214);
+            tabPage4.Size = new Size(684, 228);
             tabPage4.TabIndex = 0;
-            tabPage4.Text = "Video";
+            tabPage4.Text = "Download by URL";
             tabPage4.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel_VideoDownloader
@@ -365,18 +434,19 @@
             tableLayoutPanel_VideoDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
             tableLayoutPanel_VideoDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
             tableLayoutPanel_VideoDownloader.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            tableLayoutPanel_VideoDownloader.Size = new Size(633, 208);
+            tableLayoutPanel_VideoDownloader.Size = new Size(678, 222);
             tableLayoutPanel_VideoDownloader.TabIndex = 3;
             // 
             // btn_DownloadURL
             // 
+            btn_DownloadURL.Cursor = Cursors.Hand;
             btn_DownloadURL.Dock = DockStyle.Fill;
             btn_DownloadURL.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
-            btn_DownloadURL.Location = new Point(509, 3);
+            btn_DownloadURL.Location = new Point(545, 3);
             btn_DownloadURL.Name = "btn_DownloadURL";
-            btn_DownloadURL.Size = new Size(121, 202);
+            btn_DownloadURL.Size = new Size(130, 216);
             btn_DownloadURL.TabIndex = 1;
-            btn_DownloadURL.Text = "Download Video";
+            btn_DownloadURL.Text = "Start Download";
             btn_DownloadURL.UseVisualStyleBackColor = true;
             btn_DownloadURL.Click += DownloadVideoURL_Click;
             // 
@@ -386,10 +456,10 @@
             groupBox_DownloadURL.Dock = DockStyle.Fill;
             groupBox_DownloadURL.Location = new Point(3, 3);
             groupBox_DownloadURL.Name = "groupBox_DownloadURL";
-            groupBox_DownloadURL.Size = new Size(500, 202);
+            groupBox_DownloadURL.Size = new Size(536, 216);
             groupBox_DownloadURL.TabIndex = 6;
             groupBox_DownloadURL.TabStop = false;
-            groupBox_DownloadURL.Text = "Video URL";
+            groupBox_DownloadURL.Text = "Video or Playlist URL";
             // 
             // txt_VideoURL
             // 
@@ -397,7 +467,7 @@
             txt_VideoURL.Location = new Point(3, 23);
             txt_VideoURL.Name = "txt_VideoURL";
             txt_VideoURL.ScrollBars = ScrollBars.Vertical;
-            txt_VideoURL.Size = new Size(494, 27);
+            txt_VideoURL.Size = new Size(530, 27);
             txt_VideoURL.TabIndex = 1;
             // 
             // tabPage5
@@ -406,9 +476,9 @@
             tabPage5.Location = new Point(4, 29);
             tabPage5.Name = "tabPage5";
             tabPage5.Padding = new Padding(3);
-            tabPage5.Size = new Size(639, 214);
+            tabPage5.Size = new Size(639, 219);
             tabPage5.TabIndex = 1;
-            tabPage5.Text = "Channel";
+            tabPage5.Text = "Download by Channel";
             tabPage5.UseVisualStyleBackColor = true;
             // 
             // tlp_ChannelDl
@@ -429,16 +499,17 @@
             tlp_ChannelDl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tlp_ChannelDl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tlp_ChannelDl.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tlp_ChannelDl.Size = new Size(633, 208);
+            tlp_ChannelDl.Size = new Size(633, 213);
             tlp_ChannelDl.TabIndex = 0;
             // 
             // btn_StopDownloads
             // 
+            btn_StopDownloads.Cursor = Cursors.Hand;
             btn_StopDownloads.Dock = DockStyle.Fill;
             btn_StopDownloads.Font = new Font("Segoe UI", 7F);
-            btn_StopDownloads.Location = new Point(509, 141);
+            btn_StopDownloads.Location = new Point(509, 143);
             btn_StopDownloads.Name = "btn_StopDownloads";
-            btn_StopDownloads.Size = new Size(121, 64);
+            btn_StopDownloads.Size = new Size(121, 67);
             btn_StopDownloads.TabIndex = 15;
             btn_StopDownloads.Text = "Stop Downloads";
             btn_StopDownloads.UseVisualStyleBackColor = true;
@@ -449,7 +520,7 @@
             // 
             groupBox_VideoSearch.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             groupBox_VideoSearch.Controls.Add(txt_VideoSearch);
-            groupBox_VideoSearch.Location = new Point(3, 148);
+            groupBox_VideoSearch.Location = new Point(3, 151);
             groupBox_VideoSearch.Name = "groupBox_VideoSearch";
             groupBox_VideoSearch.Size = new Size(500, 50);
             groupBox_VideoSearch.TabIndex = 14;
@@ -468,11 +539,12 @@
             // 
             // btn_DownloadSelectedVideo
             // 
+            btn_DownloadSelectedVideo.Cursor = Cursors.Hand;
             btn_DownloadSelectedVideo.Dock = DockStyle.Fill;
             btn_DownloadSelectedVideo.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
-            btn_DownloadSelectedVideo.Location = new Point(509, 72);
+            btn_DownloadSelectedVideo.Location = new Point(509, 73);
             btn_DownloadSelectedVideo.Name = "btn_DownloadSelectedVideo";
-            btn_DownloadSelectedVideo.Size = new Size(121, 63);
+            btn_DownloadSelectedVideo.Size = new Size(121, 64);
             btn_DownloadSelectedVideo.TabIndex = 13;
             btn_DownloadSelectedVideo.Text = "Download Selected Video";
             btn_DownloadSelectedVideo.UseVisualStyleBackColor = true;
@@ -482,9 +554,9 @@
             // 
             groupBox_Video.Controls.Add(comboBox_Video);
             groupBox_Video.Dock = DockStyle.Fill;
-            groupBox_Video.Location = new Point(3, 72);
+            groupBox_Video.Location = new Point(3, 73);
             groupBox_Video.Name = "groupBox_Video";
-            groupBox_Video.Size = new Size(500, 63);
+            groupBox_Video.Size = new Size(500, 64);
             groupBox_Video.TabIndex = 12;
             groupBox_Video.TabStop = false;
             groupBox_Video.Text = "Selected Video";
@@ -501,11 +573,12 @@
             // 
             // btn_DownloadAllVideos
             // 
+            btn_DownloadAllVideos.Cursor = Cursors.Hand;
             btn_DownloadAllVideos.Dock = DockStyle.Fill;
             btn_DownloadAllVideos.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
             btn_DownloadAllVideos.Location = new Point(509, 3);
             btn_DownloadAllVideos.Name = "btn_DownloadAllVideos";
-            btn_DownloadAllVideos.Size = new Size(121, 63);
+            btn_DownloadAllVideos.Size = new Size(121, 64);
             btn_DownloadAllVideos.TabIndex = 11;
             btn_DownloadAllVideos.Text = "Download All Videos";
             btn_DownloadAllVideos.UseVisualStyleBackColor = true;
@@ -517,7 +590,7 @@
             groupBox_DownloadChannel.Dock = DockStyle.Fill;
             groupBox_DownloadChannel.Location = new Point(3, 3);
             groupBox_DownloadChannel.Name = "groupBox_DownloadChannel";
-            groupBox_DownloadChannel.Size = new Size(500, 63);
+            groupBox_DownloadChannel.Size = new Size(500, 64);
             groupBox_DownloadChannel.TabIndex = 1;
             groupBox_DownloadChannel.TabStop = false;
             groupBox_DownloadChannel.Text = "Channel";
@@ -537,21 +610,21 @@
             // 
             tableLayoutPanel_ChannelDownloader.SetColumnSpan(txt_DownloadLog, 2);
             txt_DownloadLog.Dock = DockStyle.Fill;
-            txt_DownloadLog.Location = new Point(3, 340);
+            txt_DownloadLog.Location = new Point(3, 377);
             txt_DownloadLog.Multiline = true;
             txt_DownloadLog.Name = "txt_DownloadLog";
             txt_DownloadLog.ReadOnly = true;
             txt_DownloadLog.ScrollBars = ScrollBars.Vertical;
-            txt_DownloadLog.Size = new Size(647, 81);
+            txt_DownloadLog.Size = new Size(692, 128);
             txt_DownloadLog.TabIndex = 3;
             // 
             // groupBox_Range
             // 
             groupBox_Range.Controls.Add(tlp_TimeRange);
             groupBox_Range.Dock = DockStyle.Fill;
-            groupBox_Range.Location = new Point(3, 256);
+            groupBox_Range.Location = new Point(3, 270);
             groupBox_Range.Name = "groupBox_Range";
-            groupBox_Range.Size = new Size(514, 78);
+            groupBox_Range.Size = new Size(550, 101);
             groupBox_Range.TabIndex = 7;
             groupBox_Range.TabStop = false;
             groupBox_Range.Text = "Timestamp Range";
@@ -574,7 +647,7 @@
             tlp_TimeRange.Name = "tlp_TimeRange";
             tlp_TimeRange.RowCount = 1;
             tlp_TimeRange.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlp_TimeRange.Size = new Size(508, 52);
+            tlp_TimeRange.Size = new Size(544, 75);
             tlp_TimeRange.TabIndex = 0;
             // 
             // chk_UseTimeStampRange
@@ -582,9 +655,9 @@
             chk_UseTimeStampRange.AutoSize = true;
             chk_UseTimeStampRange.Dock = DockStyle.Fill;
             chk_UseTimeStampRange.Font = new Font("Segoe UI", 7F);
-            chk_UseTimeStampRange.Location = new Point(395, 3);
+            chk_UseTimeStampRange.Location = new Point(423, 3);
             chk_UseTimeStampRange.Name = "chk_UseTimeStampRange";
-            chk_UseTimeStampRange.Size = new Size(110, 46);
+            chk_UseTimeStampRange.Size = new Size(118, 69);
             chk_UseTimeStampRange.TabIndex = 9;
             chk_UseTimeStampRange.Text = "Use Range";
             chk_UseTimeStampRange.UseVisualStyleBackColor = true;
@@ -594,10 +667,10 @@
             // 
             txt_to.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txt_to.Enabled = false;
-            txt_to.Location = new Point(283, 12);
+            txt_to.Location = new Point(303, 24);
             txt_to.Name = "txt_to";
             txt_to.ScrollBars = ScrollBars.Vertical;
-            txt_to.Size = new Size(106, 27);
+            txt_to.Size = new Size(114, 27);
             txt_to.TabIndex = 3;
             txt_to.Text = "00:02:00";
             // 
@@ -605,10 +678,10 @@
             // 
             txt_from.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             txt_from.Enabled = false;
-            txt_from.Location = new Point(87, 12);
+            txt_from.Location = new Point(93, 24);
             txt_from.Name = "txt_from";
             txt_from.ScrollBars = ScrollBars.Vertical;
-            txt_from.Size = new Size(106, 27);
+            txt_from.Size = new Size(114, 27);
             txt_from.TabIndex = 2;
             txt_from.Text = "00:01:00";
             // 
@@ -616,7 +689,7 @@
             // 
             lbl_from.Anchor = AnchorStyles.Right;
             lbl_from.AutoSize = true;
-            lbl_from.Location = new Point(37, 16);
+            lbl_from.Location = new Point(43, 27);
             lbl_from.Name = "lbl_from";
             lbl_from.Size = new Size(44, 20);
             lbl_from.TabIndex = 0;
@@ -627,7 +700,7 @@
             // 
             lbl_to.Anchor = AnchorStyles.Right;
             lbl_to.AutoSize = true;
-            lbl_to.Location = new Point(251, 16);
+            lbl_to.Location = new Point(271, 27);
             lbl_to.Name = "lbl_to";
             lbl_to.Size = new Size(26, 20);
             lbl_to.TabIndex = 1;
@@ -640,7 +713,7 @@
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(659, 430);
+            tabPage2.Size = new Size(659, 525);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Updater";
             tabPage2.UseVisualStyleBackColor = true;
@@ -650,7 +723,7 @@
             tabPage3.Controls.Add(tlp_Settings);
             tabPage3.Location = new Point(4, 29);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(659, 430);
+            tabPage3.Size = new Size(659, 525);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Settings";
             tabPage3.UseVisualStyleBackColor = true;
@@ -662,11 +735,13 @@
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tlp_Settings.Controls.Add(chk_RateLimit, 3, 5);
+            tlp_Settings.Controls.Add(groupBox_RateLimit, 0, 5);
             tlp_Settings.Controls.Add(chk_ConvertToMp3, 3, 4);
             tlp_Settings.Controls.Add(chk_UseMp4Format, 3, 3);
             tlp_Settings.Controls.Add(groupBox_FFMPEGPath, 2, 1);
             tlp_Settings.Controls.Add(groupBox_YTDLPPath, 0, 1);
-            tlp_Settings.Controls.Add(groupBox_Cmd, 0, 5);
+            tlp_Settings.Controls.Add(groupBox_Cmd, 0, 6);
             tlp_Settings.Controls.Add(chk_WriteThumbnail, 1, 2);
             tlp_Settings.Controls.Add(groupBox_OutputDir, 0, 0);
             tlp_Settings.Controls.Add(chk_WriteSubs, 0, 4);
@@ -681,25 +756,127 @@
             tlp_Settings.Dock = DockStyle.Fill;
             tlp_Settings.Location = new Point(0, 0);
             tlp_Settings.Name = "tlp_Settings";
-            tlp_Settings.RowCount = 6;
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 12F));
-            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 21F));
-            tlp_Settings.Size = new Size(659, 430);
+            tlp_Settings.RowCount = 7;
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 15.8730192F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 15.8730145F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 10.47619F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 10.47619F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 10.47619F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 20.95238F));
+            tlp_Settings.RowStyles.Add(new RowStyle(SizeType.Percent, 15.8730145F));
+            tlp_Settings.Size = new Size(659, 525);
             tlp_Settings.TabIndex = 0;
+            // 
+            // chk_RateLimit
+            // 
+            chk_RateLimit.AutoSize = true;
+            chk_RateLimit.Dock = DockStyle.Fill;
+            chk_RateLimit.Location = new Point(495, 334);
+            chk_RateLimit.Name = "chk_RateLimit";
+            chk_RateLimit.Size = new Size(161, 104);
+            chk_RateLimit.TabIndex = 31;
+            chk_RateLimit.Text = "Use Rate Limit Prevention";
+            chk_RateLimit.UseVisualStyleBackColor = true;
+            chk_RateLimit.CheckedChanged += RateLimit_CheckedChanged;
+            // 
+            // groupBox_RateLimit
+            // 
+            tlp_Settings.SetColumnSpan(groupBox_RateLimit, 3);
+            groupBox_RateLimit.Controls.Add(tableLayoutPanel1);
+            groupBox_RateLimit.Dock = DockStyle.Fill;
+            groupBox_RateLimit.Location = new Point(3, 334);
+            groupBox_RateLimit.Name = "groupBox_RateLimit";
+            groupBox_RateLimit.Size = new Size(486, 104);
+            groupBox_RateLimit.TabIndex = 30;
+            groupBox_RateLimit.TabStop = false;
+            groupBox_RateLimit.Text = "Rate Limit Prevention Durations";
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 3;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.Controls.Add(groupBox_MaxSleepInterval, 2, 0);
+            tableLayoutPanel1.Controls.Add(groupBox_SleepInterval, 1, 0);
+            tableLayoutPanel1.Controls.Add(groupBox_SleepRequests, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(3, 23);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(480, 78);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
+            // groupBox_MaxSleepInterval
+            // 
+            groupBox_MaxSleepInterval.Controls.Add(num_MaxSleepInterval);
+            groupBox_MaxSleepInterval.Dock = DockStyle.Fill;
+            groupBox_MaxSleepInterval.Location = new Point(321, 3);
+            groupBox_MaxSleepInterval.Name = "groupBox_MaxSleepInterval";
+            groupBox_MaxSleepInterval.Size = new Size(156, 72);
+            groupBox_MaxSleepInterval.TabIndex = 30;
+            groupBox_MaxSleepInterval.TabStop = false;
+            groupBox_MaxSleepInterval.Text = "Max Sleep Interval";
+            // 
+            // num_MaxSleepInterval
+            // 
+            num_MaxSleepInterval.Dock = DockStyle.Fill;
+            num_MaxSleepInterval.Location = new Point(3, 23);
+            num_MaxSleepInterval.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            num_MaxSleepInterval.Name = "num_MaxSleepInterval";
+            num_MaxSleepInterval.Size = new Size(150, 27);
+            num_MaxSleepInterval.TabIndex = 1;
+            num_MaxSleepInterval.ValueChanged += MaxSleepInterval_ValueChanged;
+            // 
+            // groupBox_SleepInterval
+            // 
+            groupBox_SleepInterval.Controls.Add(num_SleepInterval);
+            groupBox_SleepInterval.Dock = DockStyle.Fill;
+            groupBox_SleepInterval.Location = new Point(162, 3);
+            groupBox_SleepInterval.Name = "groupBox_SleepInterval";
+            groupBox_SleepInterval.Size = new Size(153, 72);
+            groupBox_SleepInterval.TabIndex = 29;
+            groupBox_SleepInterval.TabStop = false;
+            groupBox_SleepInterval.Text = "Sleep Interval";
+            // 
+            // num_SleepInterval
+            // 
+            num_SleepInterval.Dock = DockStyle.Fill;
+            num_SleepInterval.Location = new Point(3, 23);
+            num_SleepInterval.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            num_SleepInterval.Name = "num_SleepInterval";
+            num_SleepInterval.Size = new Size(147, 27);
+            num_SleepInterval.TabIndex = 1;
+            num_SleepInterval.ValueChanged += SleepInterval_ValueChanged;
+            // 
+            // groupBox_SleepRequests
+            // 
+            groupBox_SleepRequests.Controls.Add(num_SleepRequests);
+            groupBox_SleepRequests.Dock = DockStyle.Fill;
+            groupBox_SleepRequests.Location = new Point(3, 3);
+            groupBox_SleepRequests.Name = "groupBox_SleepRequests";
+            groupBox_SleepRequests.Size = new Size(153, 72);
+            groupBox_SleepRequests.TabIndex = 28;
+            groupBox_SleepRequests.TabStop = false;
+            groupBox_SleepRequests.Text = "Sleep Requests";
+            // 
+            // num_SleepRequests
+            // 
+            num_SleepRequests.Dock = DockStyle.Fill;
+            num_SleepRequests.Location = new Point(3, 23);
+            num_SleepRequests.Name = "num_SleepRequests";
+            num_SleepRequests.Size = new Size(147, 27);
+            num_SleepRequests.TabIndex = 0;
+            num_SleepRequests.ValueChanged += SleepRequests_ValueChanged;
             // 
             // chk_ConvertToMp3
             // 
             chk_ConvertToMp3.AutoSize = true;
-            chk_ConvertToMp3.Checked = true;
-            chk_ConvertToMp3.CheckState = CheckState.Checked;
             chk_ConvertToMp3.Dock = DockStyle.Fill;
-            chk_ConvertToMp3.Location = new Point(495, 290);
+            chk_ConvertToMp3.Location = new Point(495, 279);
             chk_ConvertToMp3.Name = "chk_ConvertToMp3";
-            chk_ConvertToMp3.Size = new Size(161, 45);
+            chk_ConvertToMp3.Size = new Size(161, 49);
             chk_ConvertToMp3.TabIndex = 29;
             chk_ConvertToMp3.Text = "Convert to MP3";
             chk_ConvertToMp3.UseVisualStyleBackColor = true;
@@ -708,12 +885,10 @@
             // chk_UseMp4Format
             // 
             chk_UseMp4Format.AutoSize = true;
-            chk_UseMp4Format.Checked = true;
-            chk_UseMp4Format.CheckState = CheckState.Checked;
             chk_UseMp4Format.Dock = DockStyle.Fill;
-            chk_UseMp4Format.Location = new Point(495, 239);
+            chk_UseMp4Format.Location = new Point(495, 224);
             chk_UseMp4Format.Name = "chk_UseMp4Format";
-            chk_UseMp4Format.Size = new Size(161, 45);
+            chk_UseMp4Format.Size = new Size(161, 49);
             chk_UseMp4Format.TabIndex = 28;
             chk_UseMp4Format.Text = "Use MP4 Format";
             chk_UseMp4Format.UseVisualStyleBackColor = true;
@@ -724,9 +899,9 @@
             tlp_Settings.SetColumnSpan(groupBox_FFMPEGPath, 2);
             groupBox_FFMPEGPath.Controls.Add(tlp_FFMPEGPath);
             groupBox_FFMPEGPath.Dock = DockStyle.Fill;
-            groupBox_FFMPEGPath.Location = new Point(331, 89);
+            groupBox_FFMPEGPath.Location = new Point(331, 86);
             groupBox_FFMPEGPath.Name = "groupBox_FFMPEGPath";
-            groupBox_FFMPEGPath.Size = new Size(325, 80);
+            groupBox_FFMPEGPath.Size = new Size(325, 77);
             groupBox_FFMPEGPath.TabIndex = 26;
             groupBox_FFMPEGPath.TabStop = false;
             groupBox_FFMPEGPath.Text = "ffmpeg Path";
@@ -743,16 +918,17 @@
             tlp_FFMPEGPath.Name = "tlp_FFMPEGPath";
             tlp_FFMPEGPath.RowCount = 1;
             tlp_FFMPEGPath.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlp_FFMPEGPath.Size = new Size(319, 54);
+            tlp_FFMPEGPath.Size = new Size(319, 51);
             tlp_FFMPEGPath.TabIndex = 0;
             // 
             // btn_FFMPEGPath
             // 
+            btn_FFMPEGPath.Cursor = Cursors.Hand;
             btn_FFMPEGPath.Dock = DockStyle.Fill;
             btn_FFMPEGPath.Font = new Font("Segoe UI", 7F);
             btn_FFMPEGPath.Location = new Point(258, 3);
             btn_FFMPEGPath.Name = "btn_FFMPEGPath";
-            btn_FFMPEGPath.Size = new Size(58, 48);
+            btn_FFMPEGPath.Size = new Size(58, 45);
             btn_FFMPEGPath.TabIndex = 16;
             btn_FFMPEGPath.Text = ". . .";
             btn_FFMPEGPath.UseVisualStyleBackColor = true;
@@ -761,7 +937,7 @@
             // txt_FFMPEGPath
             // 
             txt_FFMPEGPath.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txt_FFMPEGPath.Location = new Point(3, 13);
+            txt_FFMPEGPath.Location = new Point(3, 12);
             txt_FFMPEGPath.Name = "txt_FFMPEGPath";
             txt_FFMPEGPath.ScrollBars = ScrollBars.Vertical;
             txt_FFMPEGPath.Size = new Size(249, 27);
@@ -773,9 +949,9 @@
             tlp_Settings.SetColumnSpan(groupBox_YTDLPPath, 2);
             groupBox_YTDLPPath.Controls.Add(tlp_YTDLPPath);
             groupBox_YTDLPPath.Dock = DockStyle.Fill;
-            groupBox_YTDLPPath.Location = new Point(3, 89);
+            groupBox_YTDLPPath.Location = new Point(3, 86);
             groupBox_YTDLPPath.Name = "groupBox_YTDLPPath";
-            groupBox_YTDLPPath.Size = new Size(322, 80);
+            groupBox_YTDLPPath.Size = new Size(322, 77);
             groupBox_YTDLPPath.TabIndex = 25;
             groupBox_YTDLPPath.TabStop = false;
             groupBox_YTDLPPath.Text = "YT-DLP Path";
@@ -792,16 +968,17 @@
             tlp_YTDLPPath.Name = "tlp_YTDLPPath";
             tlp_YTDLPPath.RowCount = 1;
             tlp_YTDLPPath.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlp_YTDLPPath.Size = new Size(316, 54);
+            tlp_YTDLPPath.Size = new Size(316, 51);
             tlp_YTDLPPath.TabIndex = 0;
             // 
             // btn_YTDLPPath
             // 
+            btn_YTDLPPath.Cursor = Cursors.Hand;
             btn_YTDLPPath.Dock = DockStyle.Fill;
             btn_YTDLPPath.Font = new Font("Segoe UI", 7F);
             btn_YTDLPPath.Location = new Point(255, 3);
             btn_YTDLPPath.Name = "btn_YTDLPPath";
-            btn_YTDLPPath.Size = new Size(58, 48);
+            btn_YTDLPPath.Size = new Size(58, 45);
             btn_YTDLPPath.TabIndex = 16;
             btn_YTDLPPath.Text = ". . .";
             btn_YTDLPPath.UseVisualStyleBackColor = true;
@@ -810,7 +987,7 @@
             // txt_YTDLPPath
             // 
             txt_YTDLPPath.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txt_YTDLPPath.Location = new Point(3, 13);
+            txt_YTDLPPath.Location = new Point(3, 12);
             txt_YTDLPPath.Name = "txt_YTDLPPath";
             txt_YTDLPPath.ScrollBars = ScrollBars.Vertical;
             txt_YTDLPPath.Size = new Size(246, 27);
@@ -822,12 +999,12 @@
             tlp_Settings.SetColumnSpan(groupBox_Cmd, 4);
             groupBox_Cmd.Controls.Add(txt_CmdArgs);
             groupBox_Cmd.Dock = DockStyle.Fill;
-            groupBox_Cmd.Location = new Point(3, 341);
+            groupBox_Cmd.Location = new Point(3, 444);
             groupBox_Cmd.Name = "groupBox_Cmd";
-            groupBox_Cmd.Size = new Size(653, 86);
+            groupBox_Cmd.Size = new Size(653, 78);
             groupBox_Cmd.TabIndex = 24;
             groupBox_Cmd.TabStop = false;
-            groupBox_Cmd.Text = "Additional Commandline Arguments";
+            groupBox_Cmd.Text = "Additional Commandline Arguments (separate with new line)";
             // 
             // txt_CmdArgs
             // 
@@ -836,7 +1013,7 @@
             txt_CmdArgs.Multiline = true;
             txt_CmdArgs.Name = "txt_CmdArgs";
             txt_CmdArgs.ScrollBars = ScrollBars.Vertical;
-            txt_CmdArgs.Size = new Size(647, 60);
+            txt_CmdArgs.Size = new Size(647, 52);
             txt_CmdArgs.TabIndex = 0;
             txt_CmdArgs.Text = "--verbose";
             txt_CmdArgs.TextChanged += AdditionalArgs_TextChanged;
@@ -845,9 +1022,9 @@
             // 
             chk_WriteThumbnail.AutoSize = true;
             chk_WriteThumbnail.Dock = DockStyle.Fill;
-            chk_WriteThumbnail.Location = new Point(167, 175);
+            chk_WriteThumbnail.Location = new Point(167, 169);
             chk_WriteThumbnail.Name = "chk_WriteThumbnail";
-            chk_WriteThumbnail.Size = new Size(158, 58);
+            chk_WriteThumbnail.Size = new Size(158, 49);
             chk_WriteThumbnail.TabIndex = 18;
             chk_WriteThumbnail.Text = "Write Thumbnail";
             chk_WriteThumbnail.UseVisualStyleBackColor = true;
@@ -860,7 +1037,7 @@
             groupBox_OutputDir.Dock = DockStyle.Fill;
             groupBox_OutputDir.Location = new Point(3, 3);
             groupBox_OutputDir.Name = "groupBox_OutputDir";
-            groupBox_OutputDir.Size = new Size(486, 80);
+            groupBox_OutputDir.Size = new Size(486, 77);
             groupBox_OutputDir.TabIndex = 15;
             groupBox_OutputDir.TabStop = false;
             groupBox_OutputDir.Text = "Output Directory";
@@ -877,16 +1054,17 @@
             tlp_OutputDir.Name = "tlp_OutputDir";
             tlp_OutputDir.RowCount = 1;
             tlp_OutputDir.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tlp_OutputDir.Size = new Size(480, 54);
+            tlp_OutputDir.Size = new Size(480, 51);
             tlp_OutputDir.TabIndex = 0;
             // 
             // btn_OutputDir
             // 
+            btn_OutputDir.Cursor = Cursors.Hand;
             btn_OutputDir.Dock = DockStyle.Fill;
             btn_OutputDir.Font = new Font("Segoe UI", 7F);
             btn_OutputDir.Location = new Point(387, 3);
             btn_OutputDir.Name = "btn_OutputDir";
-            btn_OutputDir.Size = new Size(90, 48);
+            btn_OutputDir.Size = new Size(90, 45);
             btn_OutputDir.TabIndex = 16;
             btn_OutputDir.Text = ". . .";
             btn_OutputDir.UseVisualStyleBackColor = true;
@@ -895,7 +1073,7 @@
             // txt_OutputDir
             // 
             txt_OutputDir.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txt_OutputDir.Location = new Point(3, 13);
+            txt_OutputDir.Location = new Point(3, 12);
             txt_OutputDir.Name = "txt_OutputDir";
             txt_OutputDir.ScrollBars = ScrollBars.Vertical;
             txt_OutputDir.Size = new Size(378, 27);
@@ -906,9 +1084,9 @@
             // 
             chk_WriteSubs.AutoSize = true;
             chk_WriteSubs.Dock = DockStyle.Fill;
-            chk_WriteSubs.Location = new Point(3, 290);
+            chk_WriteSubs.Location = new Point(3, 279);
             chk_WriteSubs.Name = "chk_WriteSubs";
-            chk_WriteSubs.Size = new Size(158, 45);
+            chk_WriteSubs.Size = new Size(158, 49);
             chk_WriteSubs.TabIndex = 21;
             chk_WriteSubs.Text = "Write Subtitles";
             chk_WriteSubs.UseVisualStyleBackColor = true;
@@ -918,9 +1096,9 @@
             // 
             chk_EmbedSubs.AutoSize = true;
             chk_EmbedSubs.Dock = DockStyle.Fill;
-            chk_EmbedSubs.Location = new Point(331, 290);
+            chk_EmbedSubs.Location = new Point(331, 279);
             chk_EmbedSubs.Name = "chk_EmbedSubs";
-            chk_EmbedSubs.Size = new Size(158, 45);
+            chk_EmbedSubs.Size = new Size(158, 49);
             chk_EmbedSubs.TabIndex = 22;
             chk_EmbedSubs.Text = "Embed Subtitles";
             chk_EmbedSubs.UseVisualStyleBackColor = true;
@@ -930,9 +1108,9 @@
             // 
             chk_WriteAutoSubs.AutoSize = true;
             chk_WriteAutoSubs.Dock = DockStyle.Fill;
-            chk_WriteAutoSubs.Location = new Point(167, 290);
+            chk_WriteAutoSubs.Location = new Point(167, 279);
             chk_WriteAutoSubs.Name = "chk_WriteAutoSubs";
-            chk_WriteAutoSubs.Size = new Size(158, 45);
+            chk_WriteAutoSubs.Size = new Size(158, 49);
             chk_WriteAutoSubs.TabIndex = 23;
             chk_WriteAutoSubs.Text = "Write Auto-Subtitles";
             chk_WriteAutoSubs.UseVisualStyleBackColor = true;
@@ -942,9 +1120,9 @@
             // 
             chk_AddMetadata.AutoSize = true;
             chk_AddMetadata.Dock = DockStyle.Fill;
-            chk_AddMetadata.Location = new Point(3, 175);
+            chk_AddMetadata.Location = new Point(3, 169);
             chk_AddMetadata.Name = "chk_AddMetadata";
-            chk_AddMetadata.Size = new Size(158, 58);
+            chk_AddMetadata.Size = new Size(158, 49);
             chk_AddMetadata.TabIndex = 19;
             chk_AddMetadata.Text = "Add Metadata";
             chk_AddMetadata.UseVisualStyleBackColor = true;
@@ -954,9 +1132,9 @@
             // 
             chk_WriteInfoJson.AutoSize = true;
             chk_WriteInfoJson.Dock = DockStyle.Fill;
-            chk_WriteInfoJson.Location = new Point(3, 239);
+            chk_WriteInfoJson.Location = new Point(3, 224);
             chk_WriteInfoJson.Name = "chk_WriteInfoJson";
-            chk_WriteInfoJson.Size = new Size(158, 45);
+            chk_WriteInfoJson.Size = new Size(158, 49);
             chk_WriteInfoJson.TabIndex = 16;
             chk_WriteInfoJson.Text = "Write Info Json";
             chk_WriteInfoJson.UseVisualStyleBackColor = true;
@@ -966,9 +1144,9 @@
             // 
             chk_WriteComments.AutoSize = true;
             chk_WriteComments.Dock = DockStyle.Fill;
-            chk_WriteComments.Location = new Point(331, 239);
+            chk_WriteComments.Location = new Point(331, 224);
             chk_WriteComments.Name = "chk_WriteComments";
-            chk_WriteComments.Size = new Size(158, 45);
+            chk_WriteComments.Size = new Size(158, 49);
             chk_WriteComments.TabIndex = 17;
             chk_WriteComments.Text = "Write Comments";
             chk_WriteComments.UseVisualStyleBackColor = true;
@@ -979,9 +1157,9 @@
             chk_WriteDescription.AutoSize = true;
             chk_WriteDescription.Dock = DockStyle.Fill;
             chk_WriteDescription.Font = new Font("Segoe UI", 8F);
-            chk_WriteDescription.Location = new Point(167, 239);
+            chk_WriteDescription.Location = new Point(167, 224);
             chk_WriteDescription.Name = "chk_WriteDescription";
-            chk_WriteDescription.Size = new Size(158, 45);
+            chk_WriteDescription.Size = new Size(158, 49);
             chk_WriteDescription.TabIndex = 20;
             chk_WriteDescription.Text = "Write Description";
             chk_WriteDescription.UseVisualStyleBackColor = true;
@@ -993,7 +1171,7 @@
             groupBox_TitleFormat.Dock = DockStyle.Fill;
             groupBox_TitleFormat.Location = new Point(495, 3);
             groupBox_TitleFormat.Name = "groupBox_TitleFormat";
-            groupBox_TitleFormat.Size = new Size(161, 80);
+            groupBox_TitleFormat.Size = new Size(161, 77);
             groupBox_TitleFormat.TabIndex = 27;
             groupBox_TitleFormat.TabStop = false;
             groupBox_TitleFormat.Text = "Title Format";
@@ -1013,9 +1191,9 @@
             tlp_Settings.SetColumnSpan(groupBox_Cookies, 2);
             groupBox_Cookies.Controls.Add(comboBox_Cookies);
             groupBox_Cookies.Dock = DockStyle.Fill;
-            groupBox_Cookies.Location = new Point(331, 175);
+            groupBox_Cookies.Location = new Point(331, 169);
             groupBox_Cookies.Name = "groupBox_Cookies";
-            groupBox_Cookies.Size = new Size(325, 58);
+            groupBox_Cookies.Size = new Size(325, 49);
             groupBox_Cookies.TabIndex = 0;
             groupBox_Cookies.TabStop = false;
             groupBox_Cookies.Text = "Cookies From Browser";
@@ -1035,10 +1213,10 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem, cmdOptionsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem, cmdOptionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(667, 28);
+            menuStrip1.Size = new Size(712, 28);
             menuStrip1.TabIndex = 2;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -1098,25 +1276,46 @@
             chk_KeepCmdOpen.Size = new Size(201, 26);
             chk_KeepCmdOpen.Text = "Keep Cmd Open";
             // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readmeToolStripMenuItem, wikiToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(55, 24);
+            helpToolStripMenuItem.Text = "Help";
+            // 
+            // readmeToolStripMenuItem
+            // 
+            readmeToolStripMenuItem.Name = "readmeToolStripMenuItem";
+            readmeToolStripMenuItem.Size = new Size(147, 26);
+            readmeToolStripMenuItem.Text = "Readme";
+            readmeToolStripMenuItem.Click += Readme_Click;
+            // 
+            // wikiToolStripMenuItem
+            // 
+            wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
+            wikiToolStripMenuItem.Size = new Size(147, 26);
+            wikiToolStripMenuItem.Text = "Wiki";
+            wikiToolStripMenuItem.Click += Wiki_Click;
+            // 
             // YTVidListUpdater
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(667, 491);
+            ClientSize = new Size(712, 603);
             Controls.Add(tabControl);
             Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(460, 400);
             Name = "YTVidListUpdater";
-            Text = "YTVideoListUpdater v1.4.5";
+            Text = "YTVideoListUpdater v1.5";
             tlp_ListUpdater.ResumeLayout(false);
             tlp_ListUpdater.PerformLayout();
             groupBox_ytdlpver.ResumeLayout(false);
             groupBox_ytdlpver.PerformLayout();
             groupBox_Channel.ResumeLayout(false);
             tabControl.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
+            tabPage_Downloader.ResumeLayout(false);
             tableLayoutPanel_ChannelDownloader.ResumeLayout(false);
             tableLayoutPanel_ChannelDownloader.PerformLayout();
             tabControl_DlType.ResumeLayout(false);
@@ -1137,6 +1336,14 @@
             tabPage3.ResumeLayout(false);
             tlp_Settings.ResumeLayout(false);
             tlp_Settings.PerformLayout();
+            groupBox_RateLimit.ResumeLayout(false);
+            tableLayoutPanel1.ResumeLayout(false);
+            groupBox_MaxSleepInterval.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)num_MaxSleepInterval).EndInit();
+            groupBox_SleepInterval.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)num_SleepInterval).EndInit();
+            groupBox_SleepRequests.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)num_SleepRequests).EndInit();
             groupBox_FFMPEGPath.ResumeLayout(false);
             tlp_FFMPEGPath.ResumeLayout(false);
             tlp_FFMPEGPath.PerformLayout();
@@ -1165,7 +1372,7 @@
         private Button btn_UpdateVideoList;
         private TextBox txt_Log;
         private TabControl tabControl;
-        private TabPage tabPage1;
+        private TabPage tabPage_Downloader;
         private TabPage tabPage2;
         private TableLayoutPanel tableLayoutPanel_ChannelDownloader;
         private TextBox txt_DownloadLog;
@@ -1238,5 +1445,20 @@
         private Button btn_InstallFFMPEG;
         private CheckBox chk_UseMp4Format;
         private CheckBox chk_ConvertToMp3;
+        private GroupBox groupBox_RateLimit;
+        private TableLayoutPanel tableLayoutPanel1;
+        private GroupBox groupBox_MaxSleepInterval;
+        private GroupBox groupBox_SleepInterval;
+        private GroupBox groupBox_SleepRequests;
+        private NumericUpDown num_MaxSleepInterval;
+        private NumericUpDown num_SleepInterval;
+        private NumericUpDown num_SleepRequests;
+        private CheckBox chk_RateLimit;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem readmeToolStripMenuItem;
+        private ToolStripMenuItem wikiToolStripMenuItem;
+        private Label lbl_Credits;
+        private Label label1;
+        private CheckBox chk_UpdateOnStartup;
     }
 }
