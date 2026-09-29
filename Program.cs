@@ -1,4 +1,4 @@
-namespace YTVideoListUpdater
+namespace ShrineYTDownloader
 {
     internal static class Program
     {
@@ -11,7 +11,7 @@ namespace YTVideoListUpdater
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new YTVidListUpdater());
+            Application.Run(new ShrineYTDownloader());
         }
     }
 }

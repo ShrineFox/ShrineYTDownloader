@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
-namespace YTVideoListUpdater
+namespace ShrineYTDownloader
 {
     public class Settings
     {
@@ -71,10 +71,13 @@ namespace YTVideoListUpdater
         public bool UpdateOnStartup { get; set; } = true;
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public bool SkipExistingDL { get; set; } = true;
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string CmdLineArgs { get; set; } = "";
     }
 
-    public partial class YTVidListUpdater : Form
+    public partial class ShrineYTDownloader : Form
     {
         public static string jsonPath;
         public static Settings settings;
@@ -116,6 +119,7 @@ namespace YTVideoListUpdater
                 MaxSleepInterval = 120,
                 RateLimit = true,
                 UpdateOnStartup = true,
+                SkipExistingDL = true,
                 CmdLineArgs = "--verbose"
             };
         }
@@ -132,7 +136,7 @@ namespace YTVideoListUpdater
                 MessageBox.Show("Since this is the first time starting up," +
                     "\r\nthe program will now automatically download required dependencies:" +
                     "\r\nyt-dlp, deno, and ffmpeg." +
-                    "\r\n\r\nPlease be patient as this may take some time.", "YTVideoListUpdater (First-Time Startup)");
+                    "\r\n\r\nPlease be patient as this may take some time.", "ShrineYTDownloader (First-Time Startup)");
 
                 InstallDeno();
                 InstallFfmpeg();
@@ -168,6 +172,7 @@ namespace YTVideoListUpdater
             num_MaxSleepInterval.Value = settings.MaxSleepInterval;
             chk_RateLimit.Checked = settings.RateLimit;
             chk_UpdateOnStartup.Checked = settings.UpdateOnStartup;
+            chk_SkipExistingDL.Checked = settings.SkipExistingDL;
             txt_CmdArgs.Text = settings.CmdLineArgs;
         }
 
@@ -354,6 +359,13 @@ namespace YTVideoListUpdater
         {
             var chk = (CheckBox)sender;
             settings.UpdateOnStartup = chk.Checked;
+            SaveJson(jsonPath);
+        }
+
+        private void SkipExistngDL_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            settings.SkipExistingDL = chk.Checked;
             SaveJson(jsonPath);
         }
     }

@@ -11,11 +11,11 @@ using System.Windows.Forms;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using static YTVideoListUpdater.YTVidListUpdater;
+using static ShrineYTDownloader.ShrineYTDownloader;
 
-namespace YTVideoListUpdater
+namespace ShrineYTDownloader
 {
-    public partial class YTVidListUpdater : Form
+    public partial class ShrineYTDownloader : Form
     {
         public static List<YTVideo> videos;
         BindingSource bs = new BindingSource();
@@ -23,7 +23,7 @@ namespace YTVideoListUpdater
         BindingSource bs_videos = new BindingSource();
         public static bool stopDownloads;
 
-        public YTVidListUpdater()
+        public ShrineYTDownloader()
         {
             jsonPath = "./settings.json";
             InitializeComponent();
@@ -442,7 +442,7 @@ namespace YTVideoListUpdater
                 p.StartInfo.UseShellExecute = true;
 
                 p.StartInfo.Arguments =
-                    $"/k \"\"{exePath}\" {escapedArgs}\"";
+                    $"/k \"\"{Path.GetFullPath(exePath)}\" {escapedArgs}\"";
 
                 p.Start();
                 p.WaitForExit();
@@ -454,7 +454,7 @@ namespace YTVideoListUpdater
 
             string args = $"\"{Path.GetFullPath(settings.YTDlpExePath)}\" ";
 
-            args += $"\r\n--output \"{settings.OutputDir}\\{settings.TitleFormat}\"";
+            args += $"\r\n--output \"{Path.GetFullPath(settings.OutputDir)}\\{settings.TitleFormat}\"";
             if (!string.IsNullOrEmpty(settings.CookiesFromBrowser.Replace("None", "")))
                 args += $"\r\n--cookies-from-browser {settings.CookiesFromBrowser.ToLower()}";
             if (!string.IsNullOrEmpty(settings.FfmpegExePath))
@@ -492,6 +492,12 @@ namespace YTVideoListUpdater
                     $"\r\n--max-sleep-interval {settings.MaxSleepInterval}";
             }
 
+            if (settings.SkipExistingDL)
+            {
+                args += $"\r\n--no-overwrites" +
+                    $"\r\n--no-post-overwrites";
+            }
+
             args += $"\r\n{settings.CmdLineArgs}";
 
             return args;
@@ -523,7 +529,7 @@ namespace YTVideoListUpdater
                     output = p.StandardOutput.ReadToEnd();
                     p.WaitForExit();
                 }
-                lbl_Version.Text = output + $"\r\nIs Deno installed: {File.Exists("%USERPROFILE%\\.deno\\bin\\deno.exe")}";
+                lbl_Version.Text = output + $"\r\nIs Deno installed: {File.Exists(Path.GetFullPath("%USERPROFILE%\\.deno\\bin\\deno.exe"))}";
             }
             return output;
         }
@@ -869,12 +875,12 @@ namespace YTVideoListUpdater
 
         private void Readme_Click(object sender, EventArgs e)
         {
-            OpenWebpage("https://github.com/ShrineFox/YTVideoListUpdater#readme");
+            OpenWebpage("https://github.com/ShrineFox/ShrineYTDownloader#readme");
         }
 
         private void Wiki_Click(object sender, EventArgs e)
         {
-            OpenWebpage("https://github.com/ShrineFox/YTVideoListUpdater/wiki");
+            OpenWebpage("https://github.com/ShrineFox/ShrineYTDownloader/wiki");
         }
     }
 

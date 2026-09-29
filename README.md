@@ -1,7 +1,7 @@
 ![](https://i.imgur.com/L2B0Oeo.png)  
 
-# What is YTVideoListUpdater?
-**YouTube Video List Updater** is a multipurpose tool for downloading videos from YouTube.  
+# What is ShrineYTDownloader?
+**Shrine YouTube Downloader** (formerly known as YTVideoListUpdater) is a multipurpose tool for downloading videos from YouTube.  
 Essentially, it is yet another frontend for YT-DLP written in C# WinForms.
 
 # Why Another YT-DLP Frontend?
@@ -12,10 +12,17 @@ Since many team members have varying experience with YT-DLP, or may need specifi
 Unlike other YouTube downloaders, this tool is made specifically to track what videos are available on specific channels, and to track which ones you have already downloaded. You can also easily choose what additional data you want to download (descriptions, comments, views, thumbnails, subtitles etc) without the hassle of entering commands or navigating complicated menus.
 
 # Download
-Download the latest builds via the [Releases page](https://github.com/ShrineFox/YTVideoListUpdater/releases).
+Download the latest builds via the [Releases page](https://github.com/ShrineFox/ShrineYTDownloader/releases).  
+⚠ **NOTE**: ⚠  
+Antivirus may flag this program with the following detection. This is a **false positive**.  
+![Commando.A!ML](https://i.imgur.com/PKaKja3.png)  
+Use Windows Defender to whitelist and restore the program.  
+If you're curious, this most likely happens due to the Deno installer running via powershell. This *does* run a remote script from the following URL, which *could* potentially become a vulnerability if you do not trust the site the Deno installer is from: ``https://deno.land/install.ps1``  
+  
+  However, Deno is the javascript challenge solver that makes downloading videos from YouTube using YT-DLP possible. Thus, this program tries to install it by default before you try to download any videos.
 
 # More Information
-Read the [Wiki](https://github.com/ShrineFox/YTVideoListUpdater/wiki) for a breakdown on how to use every single feature.
+Read the [Wiki](https://github.com/ShrineFox/ShrineYTDownloader/wiki) for a breakdown on how to use every single feature.
 
 # Basic Usage
 1. Start the program for the first time to download dependencies (``ffmpeg``, ``deno``, ``yt-dlp``)
