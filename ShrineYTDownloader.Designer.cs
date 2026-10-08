@@ -130,6 +130,7 @@
             helpToolStripMenuItem = new ToolStripMenuItem();
             readmeToolStripMenuItem = new ToolStripMenuItem();
             wikiToolStripMenuItem = new ToolStripMenuItem();
+            toolStripMenuItem1 = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
             tlp_ListUpdater.SuspendLayout();
             groupBox_ytdlpver.SuspendLayout();
@@ -890,8 +891,6 @@
             // chk_RateLimit
             // 
             chk_RateLimit.AutoSize = true;
-            chk_RateLimit.Checked = true;
-            chk_RateLimit.CheckState = CheckState.Checked;
             chk_RateLimit.Dock = DockStyle.Fill;
             chk_RateLimit.Location = new Point(414, 3);
             chk_RateLimit.Name = "chk_RateLimit";
@@ -915,6 +914,7 @@
             // num_MaxSleepInterval
             // 
             num_MaxSleepInterval.Dock = DockStyle.Fill;
+            num_MaxSleepInterval.Enabled = false;
             num_MaxSleepInterval.Location = new Point(3, 23);
             num_MaxSleepInterval.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             num_MaxSleepInterval.Name = "num_MaxSleepInterval";
@@ -936,6 +936,7 @@
             // num_SleepInterval
             // 
             num_SleepInterval.Dock = DockStyle.Fill;
+            num_SleepInterval.Enabled = false;
             num_SleepInterval.Location = new Point(3, 23);
             num_SleepInterval.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
             num_SleepInterval.Name = "num_SleepInterval";
@@ -957,6 +958,7 @@
             // num_SleepRequests
             // 
             num_SleepRequests.Dock = DockStyle.Fill;
+            num_SleepRequests.Enabled = false;
             num_SleepRequests.Location = new Point(3, 23);
             num_SleepRequests.Name = "num_SleepRequests";
             num_SleepRequests.Size = new Size(125, 27);
@@ -1306,7 +1308,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem, cmdOptionsToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolsToolStripMenuItem, cmdOptionsToolStripMenuItem, helpToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(712, 28);
@@ -1366,7 +1368,7 @@
             // 
             chk_KeepCmdOpen.CheckOnClick = true;
             chk_KeepCmdOpen.Name = "chk_KeepCmdOpen";
-            chk_KeepCmdOpen.Size = new Size(224, 26);
+            chk_KeepCmdOpen.Size = new Size(201, 26);
             chk_KeepCmdOpen.Text = "Keep Cmd Open";
             // 
             // helpToolStripMenuItem
@@ -1379,16 +1381,21 @@
             // readmeToolStripMenuItem
             // 
             readmeToolStripMenuItem.Name = "readmeToolStripMenuItem";
-            readmeToolStripMenuItem.Size = new Size(224, 26);
+            readmeToolStripMenuItem.Size = new Size(147, 26);
             readmeToolStripMenuItem.Text = "Readme";
             readmeToolStripMenuItem.Click += Readme_Click;
             // 
             // wikiToolStripMenuItem
             // 
             wikiToolStripMenuItem.Name = "wikiToolStripMenuItem";
-            wikiToolStripMenuItem.Size = new Size(224, 26);
+            wikiToolStripMenuItem.Size = new Size(147, 26);
             wikiToolStripMenuItem.Text = "Wiki";
             wikiToolStripMenuItem.Click += Wiki_Click;
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(14, 24);
             // 
             // ShrineYTDownloader
             // 
@@ -1564,5 +1571,6 @@
         private CheckBox chk_RateLimit;
         private Button btn_GetCookies;
         private ToolTip toolTip1;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }

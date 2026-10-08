@@ -29,6 +29,7 @@ namespace ShrineYTDownloader
             jsonPath = "./settings.json";
             InitializeComponent();
             LoadJson(jsonPath);
+
             //SaveJson(jsonPath);
             bs.DataSource = settings.Channels;
             bs2.DataSource = settings.Channels;

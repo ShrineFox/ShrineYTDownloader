@@ -68,7 +68,7 @@ namespace ShrineYTDownloader
         public int MaxSleepInterval { get; set; } = 120;
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-        public bool RateLimit { get; set; } = true;
+        public bool RateLimit { get; set; } = false;
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool UpdateOnStartup { get; set; } = true;
@@ -120,7 +120,7 @@ namespace ShrineYTDownloader
                 SleepRequests = 3,
                 SleepInterval = 60,
                 MaxSleepInterval = 120,
-                RateLimit = true,
+                RateLimit = false,
                 UpdateOnStartup = true,
                 SkipExistingDL = true,
                 CmdLineArgs = "--verbose",
