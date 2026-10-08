@@ -1,8 +1,9 @@
-![](https://i.imgur.com/L2B0Oeo.png)  
-
-# What is ShrineYTDownloader?
+![](https://i.imgur.com/kr75nFD.png)  
+  
 **Shrine YouTube Downloader** (formerly known as YTVideoListUpdater) is a multipurpose tool for downloading videos from YouTube.  
-Essentially, it is yet another frontend for YT-DLP written in C# WinForms.
+Essentially, it is yet another frontend for YT-DLP written in C# WinForms.  
+  
+Read the [Wiki](https://github.com/ShrineFox/ShrineYTDownloader/wiki) for a breakdown on how to use every single feature.
 
 # Why Another YT-DLP Frontend?
 I made this primarily for the Vinesauce editing team to simplify the process of setting up and troubleshooting YT-DLP.  
@@ -20,9 +21,6 @@ Use Windows Defender to whitelist and restore the program.
 If you're curious, this most likely happens due to the Deno installer running via powershell. This *does* run a remote script from the following URL, which *could* potentially become a vulnerability if you do not trust the site the Deno installer is from: ``https://deno.land/install.ps1``  
   
   However, Deno is the javascript challenge solver that makes downloading videos from YouTube using YT-DLP possible. Thus, this program tries to install it by default before you try to download any videos.
-
-# More Information
-Read the [Wiki](https://github.com/ShrineFox/ShrineYTDownloader/wiki) for a breakdown on how to use every single feature.
 
 # Basic Usage
 1. Start the program for the first time to download dependencies (``ffmpeg``, ``deno``, ``yt-dlp``)
