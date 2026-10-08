@@ -23,6 +23,9 @@ namespace ShrineYTDownloader
         public string CookiesFromBrowser { get; set; } = "None";
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public string CookiesTxtPath { get; set; } = "";
+
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public string FfmpegExePath { get; set; } = "";
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
@@ -120,7 +123,9 @@ namespace ShrineYTDownloader
                 RateLimit = true,
                 UpdateOnStartup = true,
                 SkipExistingDL = true,
-                CmdLineArgs = "--verbose"
+                CmdLineArgs = "--verbose",
+                CookiesFromBrowser = "None",
+                CookiesTxtPath = ""
             };
         }
 
@@ -157,6 +162,7 @@ namespace ShrineYTDownloader
             txt_YTDLPPath.Text = settings.YTDlpExePath;
             txt_FFMPEGPath.Text = settings.FfmpegExePath;
             comboBox_Cookies.SelectedIndex = comboBox_Cookies.Items.IndexOf(settings.CookiesFromBrowser);
+            txt_CookiesTxtPath.Text = settings.CookiesTxtPath;
             chk_AddMetadata.Checked = settings.AddMetadata;
             chk_WriteThumbnail.Checked = settings.WriteThumbnail;
             chk_WriteInfoJson.Checked = settings.WriteInfoJson;
@@ -248,6 +254,21 @@ namespace ShrineYTDownloader
             var combo = (ComboBox)sender;
             settings.CookiesFromBrowser = combo.SelectedItem.ToString();
             SaveJson(jsonPath);
+
+            switch (settings.CookiesFromBrowser)
+            {
+                case "Chrome":
+                case "Chromium":
+                case "Brave":
+                case "Edge":
+                    MessageBox.Show(
+                        "Automatically fetching cookies from chromium-based browsers is currently unsupported." +
+                        "\r\nSee YT-DLP Issue 10927." +
+                        "\r\n\r\nYou can use the \"Cookies.txt Path\" option instead to specify cookies from your browser." +
+                        "\r\nClick \"Get Cookies.txt\" buton to download required browser extension." +
+                        "\r\nHover over button for further instructions.", "Unsupported Browser");
+                    break;
+            }
         }
 
         private void AddMetadata_CheckedChanged(object sender, EventArgs e)
@@ -353,6 +374,19 @@ namespace ShrineYTDownloader
             var chk = (CheckBox)sender;
             settings.RateLimit = chk.Checked;
             SaveJson(jsonPath);
+
+            if (!chk.Checked)
+            {
+                num_MaxSleepInterval.Enabled = false;
+                num_SleepInterval.Enabled = false;
+                num_SleepRequests.Enabled = false;
+            }
+            else
+            {
+                num_MaxSleepInterval.Enabled = true;
+                num_SleepInterval.Enabled = true;
+                num_SleepRequests.Enabled = true;
+            }
         }
 
         private void UpdateOnStartup_CheckedChanged(object sender, EventArgs e)
@@ -367,6 +401,26 @@ namespace ShrineYTDownloader
             var chk = (CheckBox)sender;
             settings.SkipExistingDL = chk.Checked;
             SaveJson(jsonPath);
+        }
+
+        private void CookiesTxt_TextChanged(object sender, EventArgs e)
+        {
+            var txt = (TextBox)sender;
+            settings.CookiesTxtPath = txt.Text;
+            SaveJson(jsonPath);
+        }
+
+        private void CookiesTxt_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDlg = new OpenFileDialog();
+            fileDlg.Title = "Select your cookies.txt";
+            fileDlg.Filter = "Cookies Text File Dumped From Browser (*.txt)|*.txt|All Files (*.*)|*.*";
+
+            var result = fileDlg.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                txt_CookiesTxtPath.Text = fileDlg.FileName;
+            }
         }
     }
 }
