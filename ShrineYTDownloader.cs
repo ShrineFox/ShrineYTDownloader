@@ -5,14 +5,9 @@ using System.IO;
 using System.Media;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Threading.Channels;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Metadata;
 using YoutubeDLSharp.Options;
-using static ShrineYTDownloader.ShrineYTDownloader;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ShrineYTDownloader
 {
@@ -239,7 +234,8 @@ namespace ShrineYTDownloader
         {
             if (!File.Exists(channel.Name + ".tsv"))
             {
-                txt_DownloadLog.Text = $"Could not find \"{Path.GetFullPath(channel.Name + ".tsv")}\", " +
+                if (!channel.Name.Contains("Select a Channel"))
+                    txt_DownloadLog.Text = $"Could not find \"{Path.GetFullPath(channel.Name + ".tsv")}\", " +
                     $"try downloading a video list for the channel first.";
                 return;
             }
@@ -339,6 +335,9 @@ namespace ShrineYTDownloader
         private void DownloadAllVideos_Click(object sender, EventArgs e)
         {
             YTVideo selectedVideo = (YTVideo)comboBox_Video.SelectedItem;
+
+            if (selectedVideo == null)
+                return;
 
             foreach (var vid in videos.SkipWhile(x => x != selectedVideo).Skip(1))
             {
@@ -462,18 +461,18 @@ namespace ShrineYTDownloader
             stopDownloads = false;
         }
 
-        private async void DownloadYTVideo(string url, string title = "")
+        private async void DownloadYTVideo(string url, string title = "", bool isFromTextFile = false)
         {
             if (stopDownloads)
                 return;
 
-            string args = GetYTDLPArgsFromSettings(url);
+            string args = GetYTDLPArgsFromSettings(url, isFromTextFile);
 
             if (chk_LaunchCmd.Checked)
             {
                 if (chk_KeepCmdOpen.Checked)
-                    KeepOpenCmd(args.Replace("\r", "").Replace("\n", " ") + $" {url}");
-                LaunchYTDLPCmdSilently(args.Replace("\r", "").Replace("\n", " ") + $" {url}");
+                    KeepOpenCmd(args.Replace("\r", "").Replace("\n", " "));
+                LaunchYTDLPCmdSilently(args.Replace("\r", "").Replace("\n", " "));
                 txt_DownloadLog.Text += $"\r\nLaunching command prompt:\r\n{args}";
             }
             else
@@ -518,7 +517,7 @@ namespace ShrineYTDownloader
             }
         }
 
-        private string GetYTDLPArgsFromSettings(string videoURL)
+        private string GetYTDLPArgsFromSettings(string videoURL, bool isFromTextFile = false)
         {
             // Start by specifying path to YT-DLP.exe
             string args = $"\"{Path.GetFullPath(settings.YTDlpExePath)}\" ";
@@ -586,6 +585,12 @@ namespace ShrineYTDownloader
             // Add any additional user-specified commandline settings to end of query
             args += $"\r\n{settings.CmdLineArgs}";
 
+            // Add video url if not downloading via list of urls from local text file
+            if (!isFromTextFile)
+                args += $" {videoURL}";
+            else
+                args += $" -a \"{Path.GetFullPath(videoURL)}\"";
+
             return args;
         }
 
@@ -622,10 +627,10 @@ namespace ShrineYTDownloader
 
         private void UpdateYTDLP_Click(object sender, EventArgs e)
         {
-            UpdateYTDLP();
+            UpdateYTDLP(true);
         }
 
-        private void UpdateYTDLP()
+        private void UpdateYTDLP(bool playSound = false)
         {
             if (!File.Exists("./yt-dlp.exe"))
             {
@@ -664,7 +669,8 @@ namespace ShrineYTDownloader
             }).Start();
 
             txt_Log.Text += $"\r\nYT-DLP is now up to date: {GetYTDLPVersion()}";
-            SystemSounds.Exclamation.Play();
+            if (playSound)
+                SystemSounds.Exclamation.Play();
         }
 
         private void StopDownload_Click(object sender, EventArgs e)
@@ -734,7 +740,8 @@ namespace ShrineYTDownloader
         {
             if (!File.Exists(tsvPath))
             {
-                txt_DownloadLog.Text = $"Could not find file: {tsvPath}";
+                if (!tsvPath.Contains("Select a Channel"))
+                    txt_DownloadLog.Text = $"Could not find file: {tsvPath}";
                 return;
             }
 
@@ -992,10 +999,7 @@ namespace ShrineYTDownloader
         {
             if (File.Exists(txt_VideoTextPath.Text))
             {
-                foreach (var url in File.ReadAllLines(txt_VideoTextPath.Text))
-                {
-                    DownloadYTVideo(url);
-                }
+                DownloadYTVideo(txt_VideoTextPath.Text, isFromTextFile: true);
             }
             stopDownloads = false;
         }

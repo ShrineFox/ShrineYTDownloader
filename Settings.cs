@@ -102,6 +102,7 @@ namespace ShrineYTDownloader
             settings = new Settings()
             {
                 Channels = new List<YTChannel>() {
+                    new YTChannel() { ID = "", Name = "Select a Channel" },
                     new YTChannel() { ID = "UCzORJV8l3FWY4cFO8ot-F2w", Name = "vinesauce" },
                     new YTChannel() { ID = "UC2_IYqb1Tc_8Azh7rByedPA", Name = "FullSauce" },
                     new YTChannel() { ID = "UCo03CCLE1x34004iBmjcHnA", Name = "TwitchClipSauce" },
@@ -139,15 +140,20 @@ namespace ShrineYTDownloader
                 // Create new configuraton JSON since one doesn't exist
                 SaveJson(jsonPath);
 
-                // Ensure Deno and Ffmpeg are installed if this is (likely)
-                // the first time launching program
-                MessageBox.Show("Since this is the first time starting up," +
-                    "\r\nthe program will now automatically download required dependencies:" +
-                    "\r\nyt-dlp, deno, and ffmpeg." +
-                    "\r\n\r\nPlease be patient as this may take some time.", "ShrineYTDownloader (First-Time Startup)");
+                if (!File.Exists("./deno.exe") || !File.Exists(settings.FfmpegExePath))
+                {
+                    // Ensure Deno and Ffmpeg are installed if this is (likely)
+                    // the first time launching program
+                    MessageBox.Show("Since this is the first time starting up," +
+                        "\r\nthe program will now automatically download required dependencies:" +
+                        "\r\nyt-dlp, deno, and ffmpeg." +
+                        "\r\n\r\nPlease be patient as this may take some time.", "ShrineYTDownloader (First-Time Startup)");
 
-                InstallDeno();
-                InstallFfmpeg();
+                    if (!File.Exists("./deno.exe"))
+                        InstallDeno();
+                    if (!File.Exists(settings.FfmpegExePath))
+                        InstallFfmpeg();
+                }
             }
 
             string jsonText = File.ReadAllText(Path.GetFullPath(jsonPath));
