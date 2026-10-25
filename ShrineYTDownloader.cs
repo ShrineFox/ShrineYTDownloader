@@ -54,7 +54,7 @@ namespace ShrineYTDownloader
 
         private void SetupTooltips()
         {
-            
+
             // Download by URL
             toolTip1.SetToolTip(groupBox_DownloadURL, "Manually specify URL for video or playlist to download.\r\n\r\n" +
                 "Video URL example: https://www.youtube.com/watch?v=oeRD_fGFhdA\r\nPlaylist URL example: https://www.youtube.com/playlist?list=PLU6By7bu-RSs6FRsdyYotRzhFm2l7CEYv");
@@ -72,6 +72,11 @@ namespace ShrineYTDownloader
             toolTip1.SetToolTip(groupBox_Range, "Specify \"start\" and \"end\" timestamps of downloaded videos.\r\nUse the hh:mm:ss format.");
             toolTip1.SetToolTip(chk_LaunchCmd, "Show the output of YT-DLP as a separate window, instead of in the built-in log textbox at the bottom of the \"Downloader\" tab.");
 
+            // Download by Video List
+            toolTip1.SetToolTip(groupBox_VideoTextPath, "Select a text file containing a list of video URLs to download.");
+            toolTip1.SetToolTip(btn_VideoTextPath, "Select a text file containing a list of video URLs to download.");
+            toolTip1.SetToolTip(btn_VideoTextDownload, "Begin downloading each video from the text file's URL list one by one.");
+
             // Updater
             toolTip1.SetToolTip(groupBox_Channel, "Channels to update video lists for. Lists appear in \"Downloader\" Tab.\r\nAdd channels in ./settings.json using a text editor.");
             toolTip1.SetToolTip(btn_UpdateVideoList, "Download an up-to-date list of videos for the selected channel.");
@@ -80,13 +85,13 @@ namespace ShrineYTDownloader
             toolTip1.SetToolTip(chk_UpdateOnStartup, "Automatically download latest YT-DLP when this program is opened.");
             toolTip1.SetToolTip(btn_InstallFFMPEG, "Install very latest FFMPEG to this program's folder.\r\nUsed for conversion and downloading in highest resolution.");
             toolTip1.SetToolTip(btn_InstallDeno, "Install very latest Deno to this program's folder.\r\nUsed for solving javascript verification challenges from YouTube.");
-            
+
             // Settings
             toolTip1.SetToolTip(groupBox_OutputDir, "Path to the folder where videos will be downloaded to.");
             toolTip1.SetToolTip(groupBox_TitleFormat, "Format of the downloaded video filename (i.e. VideoTitle.mp4).");
             toolTip1.SetToolTip(groupBox_YTDLPPath, "Path to yt-dlp.exe. You probably don't need to change this,\r\nYT-DLP gets downloaded to the program's root folder by default.");
             toolTip1.SetToolTip(groupBox_FFMPEGPath, "Path to ffmpeg.exe. You probably don't need to change this,\r\nFFMPEG gets downloaded to the program's root folder by default.");
-            toolTip1.SetToolTip(groupBox_Cookies, "Attempts to use YouTube logins from browser to improve reliability downloading videos.\r\n\r\nNote: Chromium-based browsers don't work at this time, use \"Cookies.txt\" instead.\r\nUsing a VPN can help avoid rate limits, IP bans etc.\r\nIt's recommended to login to a burner YouTube account instead of your main one.");
+            toolTip1.SetToolTip(groupBox_Cookies, "Attempts to use YouTube/Reddit logins from browser to improve reliability downloading videos.\r\n\r\nNote: Chromium-based browsers don't work at this time, use \"Cookies.txt\" instead.\r\nUsing a VPN can help avoid rate limits, IP bans etc.\r\nIt's recommended to login to a burner YouTube account instead of your main one.");
             toolTip1.SetToolTip(groupBox_CookiesTxt, "Path to cookies.txt.\r\nHover over \"Get Cookies\" button for more info.\r\n\r\nNote: Using a VPN can help avoid rate limits, IP bans etc.\r\nIt's recommended to login to a burner YouTube account instead of your main one.");
             toolTip1.SetToolTip(btn_GetCookies, "Install cookies extension for Chrome.\r\n\r\nClick the extension icon and choose \"Download All Cookies\"\r\nto get cookies.txt.");
             toolTip1.SetToolTip(chk_AddMetadata, "If enabled, metadata about the video (such as its url, upload date, and description) will be added to the video file.");
@@ -97,12 +102,13 @@ namespace ShrineYTDownloader
             toolTip1.SetToolTip(chk_WriteSubs, "If enabled, manual subtitles will be downloaded along with the video.");
             toolTip1.SetToolTip(chk_WriteAutoSubs, "If enabled, automatic (YouTube-transcribed) subtitles will be downloaded along with the video.");
             toolTip1.SetToolTip(chk_EmbedSubs, "If enabled, subtitles will be embedded into the video format, if possible.");
-            toolTip1.SetToolTip(chk_UseMp4Format, "If enabled, the video will attempt to be downloaded in (or converted to) .mp4 format, instead of whatever other format it downloads in by default (i.e. mkv)");
+            toolTip1.SetToolTip(chk_UseMp4Format, "If enabled, the video will attempt to be downloaded in (or converted to)\r\n.mp4 format, instead of whatever other format it downloads in by default (i.e. mkv)");
             toolTip1.SetToolTip(chk_ConvertToMp3, "If enabled, the video will be converted to .MP3 after being downloaded, in case you only want the audio.");
             toolTip1.SetToolTip(groupBox_RateLimit, "Use to prevent timeouts, rate limiting, IP bans etc from detected automated behavior.\r\n\r\nSleep Requests: Number of seconds to sleep between requests during data extraction (default: 3)\r\nSleep Interval: Number of seconds to sleep before each download.\r\n\tThis is the minimum time to sleep when used along with --max-sleep-interval.\r\nMax Sleep Interval: Maximum number of seconds to sleep. Can only e used along with --min-sleep-interval.");
             toolTip1.SetToolTip(chk_UseMp4Format, "If enabled, the video will attempt to be downloaded in (or converted to) .mp4 format, instead of whatever other format it downloads in by default (i.e. mkv)");
             toolTip1.SetToolTip(chk_ConvertToMp3, "If enabled, the video will be converted to .MP3 after being downloaded, in case you only want the audio.");
             toolTip1.SetToolTip(chk_RateLimit, "If enabled, rate limit prevention durations will be used when downloading.\r\nDisable to download faster, but at the risk of triggering rate limits or IP bans more easily.");
+            toolTip1.SetToolTip(chk_ImpersonateChrome, "If enabled, the downloader will impersonate Chrome when downloading non-YouTube videos.\r\nThis can help avoid IP blocks from sites like Reddit.");
             toolTip1.SetToolTip(chk_SkipExistingDL, "If enabled, downloading will be skipped when a video in the Output folder exists with a matching title.");
             toolTip1.SetToolTip(groupBox_Cmd, "Enter any additional commandline options that you want to use here.\r\nEach option and value must be listed on a new line. Example:\r\n--verbose\r\n--convert-subs ass\r\n--sub-langs all");
         }
@@ -448,7 +454,11 @@ namespace ShrineYTDownloader
 
         private void DownloadVideoURL_Click(object sender, EventArgs e)
         {
-            DownloadYTVideo(txt_VideoURL.Text);
+            if (!string.IsNullOrEmpty(txt_VideoURL.Text))
+            {
+                DownloadYTVideo(txt_VideoURL.Text);
+            }
+
             stopDownloads = false;
         }
 
@@ -568,6 +578,10 @@ namespace ShrineYTDownloader
                 args += $"\r\n--no-overwrites" +
                     $"\r\n--no-post-overwrites";
             }
+
+            // Impersonate Chrome when downloading non-youtube videos to avoid IP blocks (i.e. Reddit)
+            if (settings.ImpersonateChrome && !videoURL.Contains("youtube.com") && !videoURL.Contains("youtu.be"))
+                args += "\r\n--impersonate chrome";
 
             // Add any additional user-specified commandline settings to end of query
             args += $"\r\n{settings.CmdLineArgs}";
@@ -958,6 +972,32 @@ namespace ShrineYTDownloader
         private void GetCookiesTxtBtn_Click(object sender, EventArgs e)
         {
             OpenWebpage("https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc?pli=1");
+        }
+
+        private void VideoTextFileButton_Click(object sender, EventArgs e)
+        {
+            stopDownloads = false;
+            OpenFileDialog fileDlg = new OpenFileDialog();
+            fileDlg.Title = "Select File with Video URLs to Download";
+            fileDlg.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+
+            var result = fileDlg.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                txt_VideoTextPath.Text = fileDlg.FileName;
+            }
+        }
+
+        private void VideoTextDownload_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(txt_VideoTextPath.Text))
+            {
+                foreach (var url in File.ReadAllLines(txt_VideoTextPath.Text))
+                {
+                    DownloadYTVideo(url);
+                }
+            }
+            stopDownloads = false;
         }
     }
 

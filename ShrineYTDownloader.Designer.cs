@@ -51,6 +51,7 @@
             tabPage4 = new TabPage();
             tableLayoutPanel_VideoDownloader = new TableLayoutPanel();
             btn_DownloadURL = new Button();
+            tlp_DLByURL = new TableLayoutPanel();
             groupBox_DownloadURL = new GroupBox();
             txt_VideoURL = new TextBox();
             tabPage5 = new TabPage();
@@ -64,6 +65,14 @@
             btn_DownloadAllVideos = new Button();
             groupBox_DownloadChannel = new GroupBox();
             comboBox_ChannelDownload = new ComboBox();
+            tabPage1 = new TabPage();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            btn_VideoTextDownload = new Button();
+            tlp_VideoTextDL = new TableLayoutPanel();
+            groupBox_VideoTextPath = new GroupBox();
+            tableLayoutPanel7 = new TableLayoutPanel();
+            btn_VideoTextPath = new Button();
+            txt_VideoTextPath = new TextBox();
             txt_DownloadLog = new TextBox();
             groupBox_Range = new GroupBox();
             tlp_TimeRange = new TableLayoutPanel();
@@ -132,6 +141,7 @@
             wikiToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
             toolTip1 = new ToolTip(components);
+            chk_ImpersonateChrome = new CheckBox();
             tlp_ListUpdater.SuspendLayout();
             groupBox_ytdlpver.SuspendLayout();
             groupBox_Channel.SuspendLayout();
@@ -141,12 +151,18 @@
             tabControl_DlType.SuspendLayout();
             tabPage4.SuspendLayout();
             tableLayoutPanel_VideoDownloader.SuspendLayout();
+            tlp_DLByURL.SuspendLayout();
             groupBox_DownloadURL.SuspendLayout();
             tabPage5.SuspendLayout();
             tlp_ChannelDl.SuspendLayout();
             groupBox_VideoSearch.SuspendLayout();
             groupBox_Video.SuspendLayout();
             groupBox_DownloadChannel.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tlp_VideoTextDL.SuspendLayout();
+            groupBox_VideoTextPath.SuspendLayout();
+            tableLayoutPanel7.SuspendLayout();
             groupBox_Range.SuspendLayout();
             tlp_TimeRange.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -410,6 +426,7 @@
             tableLayoutPanel_ChannelDownloader.SetColumnSpan(tabControl_DlType, 2);
             tabControl_DlType.Controls.Add(tabPage4);
             tabControl_DlType.Controls.Add(tabPage5);
+            tabControl_DlType.Controls.Add(tabPage1);
             tabControl_DlType.Dock = DockStyle.Fill;
             tabControl_DlType.Location = new Point(3, 3);
             tabControl_DlType.Name = "tabControl_DlType";
@@ -435,7 +452,7 @@
             tableLayoutPanel_VideoDownloader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
             tableLayoutPanel_VideoDownloader.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tableLayoutPanel_VideoDownloader.Controls.Add(btn_DownloadURL, 1, 0);
-            tableLayoutPanel_VideoDownloader.Controls.Add(groupBox_DownloadURL, 0, 0);
+            tableLayoutPanel_VideoDownloader.Controls.Add(tlp_DLByURL, 0, 0);
             tableLayoutPanel_VideoDownloader.Dock = DockStyle.Fill;
             tableLayoutPanel_VideoDownloader.Location = new Point(3, 3);
             tableLayoutPanel_VideoDownloader.Name = "tableLayoutPanel_VideoDownloader";
@@ -461,25 +478,40 @@
             btn_DownloadURL.UseVisualStyleBackColor = true;
             btn_DownloadURL.Click += DownloadVideoURL_Click;
             // 
+            // tlp_DLByURL
+            // 
+            tlp_DLByURL.ColumnCount = 1;
+            tlp_DLByURL.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tlp_DLByURL.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlp_DLByURL.Controls.Add(groupBox_DownloadURL, 0, 0);
+            tlp_DLByURL.Dock = DockStyle.Fill;
+            tlp_DLByURL.Location = new Point(3, 3);
+            tlp_DLByURL.Name = "tlp_DLByURL";
+            tlp_DLByURL.RowCount = 2;
+            tlp_DLByURL.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlp_DLByURL.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlp_DLByURL.Size = new Size(536, 216);
+            tlp_DLByURL.TabIndex = 2;
+            // 
             // groupBox_DownloadURL
             // 
             groupBox_DownloadURL.Controls.Add(txt_VideoURL);
             groupBox_DownloadURL.Dock = DockStyle.Fill;
             groupBox_DownloadURL.Location = new Point(3, 3);
             groupBox_DownloadURL.Name = "groupBox_DownloadURL";
-            groupBox_DownloadURL.Size = new Size(536, 216);
-            groupBox_DownloadURL.TabIndex = 6;
+            groupBox_DownloadURL.Size = new Size(530, 102);
+            groupBox_DownloadURL.TabIndex = 7;
             groupBox_DownloadURL.TabStop = false;
             groupBox_DownloadURL.Text = "Video or Playlist URL";
             // 
             // txt_VideoURL
             // 
-            txt_VideoURL.Dock = DockStyle.Fill;
-            txt_VideoURL.Location = new Point(3, 23);
+            txt_VideoURL.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txt_VideoURL.Location = new Point(3, 38);
             txt_VideoURL.Name = "txt_VideoURL";
             txt_VideoURL.ScrollBars = ScrollBars.Vertical;
-            txt_VideoURL.Size = new Size(530, 27);
-            txt_VideoURL.TabIndex = 1;
+            txt_VideoURL.Size = new Size(521, 27);
+            txt_VideoURL.TabIndex = 3;
             // 
             // tabPage5
             // 
@@ -617,6 +649,111 @@
             comboBox_ChannelDownload.TabIndex = 0;
             comboBox_ChannelDownload.SelectedIndexChanged += ChannelDownload_Changed;
             // 
+            // tabPage1
+            // 
+            tabPage1.Controls.Add(tableLayoutPanel4);
+            tabPage1.Location = new Point(4, 29);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Size = new Size(684, 228);
+            tabPage1.TabIndex = 2;
+            tabPage1.Text = "Download via Text File";
+            tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 2;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel4.Controls.Add(btn_VideoTextDownload, 1, 0);
+            tableLayoutPanel4.Controls.Add(tlp_VideoTextDL, 0, 0);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(0, 0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            tableLayoutPanel4.Size = new Size(684, 228);
+            tableLayoutPanel4.TabIndex = 4;
+            // 
+            // btn_VideoTextDownload
+            // 
+            btn_VideoTextDownload.Cursor = Cursors.Hand;
+            btn_VideoTextDownload.Dock = DockStyle.Fill;
+            btn_VideoTextDownload.Font = new Font("Segoe UI", 7F, FontStyle.Bold);
+            btn_VideoTextDownload.Location = new Point(550, 3);
+            btn_VideoTextDownload.Name = "btn_VideoTextDownload";
+            btn_VideoTextDownload.Size = new Size(131, 222);
+            btn_VideoTextDownload.TabIndex = 1;
+            btn_VideoTextDownload.Text = "Start Download";
+            btn_VideoTextDownload.UseVisualStyleBackColor = true;
+            btn_VideoTextDownload.Click += VideoTextDownload_Click;
+            // 
+            // tlp_VideoTextDL
+            // 
+            tlp_VideoTextDL.ColumnCount = 1;
+            tlp_VideoTextDL.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tlp_VideoTextDL.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlp_VideoTextDL.Controls.Add(groupBox_VideoTextPath, 0, 0);
+            tlp_VideoTextDL.Dock = DockStyle.Fill;
+            tlp_VideoTextDL.Location = new Point(3, 3);
+            tlp_VideoTextDL.Name = "tlp_VideoTextDL";
+            tlp_VideoTextDL.RowCount = 2;
+            tlp_VideoTextDL.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlp_VideoTextDL.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tlp_VideoTextDL.Size = new Size(541, 222);
+            tlp_VideoTextDL.TabIndex = 2;
+            // 
+            // groupBox_VideoTextPath
+            // 
+            groupBox_VideoTextPath.Controls.Add(tableLayoutPanel7);
+            groupBox_VideoTextPath.Dock = DockStyle.Fill;
+            groupBox_VideoTextPath.Location = new Point(3, 3);
+            groupBox_VideoTextPath.Name = "groupBox_VideoTextPath";
+            groupBox_VideoTextPath.Size = new Size(535, 105);
+            groupBox_VideoTextPath.TabIndex = 8;
+            groupBox_VideoTextPath.TabStop = false;
+            groupBox_VideoTextPath.Text = "Text File w/ Video URL List";
+            // 
+            // tableLayoutPanel7
+            // 
+            tableLayoutPanel7.ColumnCount = 2;
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
+            tableLayoutPanel7.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel7.Controls.Add(btn_VideoTextPath, 1, 0);
+            tableLayoutPanel7.Controls.Add(txt_VideoTextPath, 0, 0);
+            tableLayoutPanel7.Dock = DockStyle.Fill;
+            tableLayoutPanel7.Location = new Point(3, 23);
+            tableLayoutPanel7.Name = "tableLayoutPanel7";
+            tableLayoutPanel7.RowCount = 1;
+            tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel7.Size = new Size(529, 79);
+            tableLayoutPanel7.TabIndex = 0;
+            // 
+            // btn_VideoTextPath
+            // 
+            btn_VideoTextPath.Cursor = Cursors.Hand;
+            btn_VideoTextPath.Dock = DockStyle.Fill;
+            btn_VideoTextPath.Font = new Font("Segoe UI", 7F);
+            btn_VideoTextPath.Location = new Point(426, 3);
+            btn_VideoTextPath.Name = "btn_VideoTextPath";
+            btn_VideoTextPath.Size = new Size(100, 73);
+            btn_VideoTextPath.TabIndex = 17;
+            btn_VideoTextPath.Text = ". . .";
+            btn_VideoTextPath.UseVisualStyleBackColor = true;
+            btn_VideoTextPath.Click += VideoTextFileButton_Click;
+            // 
+            // txt_VideoTextPath
+            // 
+            txt_VideoTextPath.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txt_VideoTextPath.Location = new Point(3, 26);
+            txt_VideoTextPath.Name = "txt_VideoTextPath";
+            txt_VideoTextPath.ScrollBars = ScrollBars.Vertical;
+            txt_VideoTextPath.Size = new Size(417, 27);
+            txt_VideoTextPath.TabIndex = 2;
+            // 
             // txt_DownloadLog
             // 
             tableLayoutPanel_ChannelDownloader.SetColumnSpan(txt_DownloadLog, 2);
@@ -748,6 +885,7 @@
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlp_Settings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tlp_Settings.Controls.Add(chk_ImpersonateChrome, 4, 4);
             tlp_Settings.Controls.Add(btn_GetCookies, 4, 3);
             tlp_Settings.Controls.Add(chk_SkipExistingDL, 4, 5);
             tlp_Settings.Controls.Add(groupBox_CookiesTxt, 3, 2);
@@ -1397,6 +1535,17 @@
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new Size(14, 24);
             // 
+            // chk_ImpersonateChrome
+            // 
+            chk_ImpersonateChrome.AutoSize = true;
+            chk_ImpersonateChrome.Dock = DockStyle.Fill;
+            chk_ImpersonateChrome.Location = new Point(563, 306);
+            chk_ImpersonateChrome.Name = "chk_ImpersonateChrome";
+            chk_ImpersonateChrome.Size = new Size(138, 51);
+            chk_ImpersonateChrome.TabIndex = 35;
+            chk_ImpersonateChrome.Text = "Impersonate Chrome";
+            chk_ImpersonateChrome.UseVisualStyleBackColor = true;
+            // 
             // ShrineYTDownloader
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1408,7 +1557,7 @@
             MainMenuStrip = menuStrip1;
             MinimumSize = new Size(460, 400);
             Name = "ShrineYTDownloader";
-            Text = "ShrineYTDownloader v1.5.2";
+            Text = "ShrineYTDownloader v1.5.3";
             tlp_ListUpdater.ResumeLayout(false);
             tlp_ListUpdater.PerformLayout();
             groupBox_ytdlpver.ResumeLayout(false);
@@ -1421,6 +1570,7 @@
             tabControl_DlType.ResumeLayout(false);
             tabPage4.ResumeLayout(false);
             tableLayoutPanel_VideoDownloader.ResumeLayout(false);
+            tlp_DLByURL.ResumeLayout(false);
             groupBox_DownloadURL.ResumeLayout(false);
             groupBox_DownloadURL.PerformLayout();
             tabPage5.ResumeLayout(false);
@@ -1429,6 +1579,12 @@
             groupBox_VideoSearch.PerformLayout();
             groupBox_Video.ResumeLayout(false);
             groupBox_DownloadChannel.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tableLayoutPanel4.ResumeLayout(false);
+            tlp_VideoTextDL.ResumeLayout(false);
+            groupBox_VideoTextPath.ResumeLayout(false);
+            tableLayoutPanel7.ResumeLayout(false);
+            tableLayoutPanel7.PerformLayout();
             groupBox_Range.ResumeLayout(false);
             tlp_TimeRange.ResumeLayout(false);
             tlp_TimeRange.PerformLayout();
@@ -1490,8 +1646,6 @@
         private TabPage tabPage4;
         private TableLayoutPanel tableLayoutPanel_VideoDownloader;
         private Button btn_DownloadURL;
-        private GroupBox groupBox_DownloadURL;
-        private TextBox txt_VideoURL;
         private TabPage tabPage5;
         private TableLayoutPanel tlp_ChannelDl;
         private Button btn_DownloadSelectedVideo;
@@ -1572,5 +1726,17 @@
         private Button btn_GetCookies;
         private ToolTip toolTip1;
         private ToolStripMenuItem toolStripMenuItem1;
+        private TabPage tabPage1;
+        private TableLayoutPanel tableLayoutPanel4;
+        private Button btn_VideoTextDownload;
+        private TableLayoutPanel tlp_VideoTextDL;
+        private GroupBox groupBox_VideoTextPath;
+        private TableLayoutPanel tableLayoutPanel7;
+        private Button btn_VideoTextPath;
+        private TextBox txt_VideoTextPath;
+        private TableLayoutPanel tlp_DLByURL;
+        private GroupBox groupBox_DownloadURL;
+        private TextBox txt_VideoURL;
+        private CheckBox chk_ImpersonateChrome;
     }
 }

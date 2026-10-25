@@ -71,6 +71,8 @@ namespace ShrineYTDownloader
         public bool RateLimit { get; set; } = false;
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+        public bool ImpersonateChrome { get; set; } = true;
+        [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
         public bool UpdateOnStartup { get; set; } = true;
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
@@ -121,6 +123,7 @@ namespace ShrineYTDownloader
                 SleepInterval = 60,
                 MaxSleepInterval = 120,
                 RateLimit = false,
+                ImpersonateChrome = true,
                 UpdateOnStartup = true,
                 SkipExistingDL = true,
                 CmdLineArgs = "--verbose",
@@ -177,6 +180,7 @@ namespace ShrineYTDownloader
             num_SleepInterval.Value = settings.SleepInterval;
             num_MaxSleepInterval.Value = settings.MaxSleepInterval;
             chk_RateLimit.Checked = settings.RateLimit;
+            chk_ImpersonateChrome.Checked = settings.ImpersonateChrome;
             chk_UpdateOnStartup.Checked = settings.UpdateOnStartup;
             chk_SkipExistingDL.Checked = settings.SkipExistingDL;
             txt_CmdArgs.Text = settings.CmdLineArgs;
@@ -387,6 +391,13 @@ namespace ShrineYTDownloader
                 num_SleepInterval.Enabled = true;
                 num_SleepRequests.Enabled = true;
             }
+        }
+
+        private void ImpersonateChrome_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = (CheckBox)sender;
+            settings.ImpersonateChrome = chk.Checked;
+            SaveJson(jsonPath);
         }
 
         private void UpdateOnStartup_CheckedChanged(object sender, EventArgs e)
